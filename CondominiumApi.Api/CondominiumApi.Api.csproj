@@ -16,4 +16,9 @@
 		<Folder Include="Filters\ViewModels\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\CondominiumApi.Infrastructure.Data\CondominiumApi.Infrastructure.Data.csproj" />
+	  <ProjectReference Include="..\CondominiumApi.Infrastructure.IoC\CondominiumApi.Infrastructure.IoC.csproj" />
+	</ItemGroup>
+
 </Project>

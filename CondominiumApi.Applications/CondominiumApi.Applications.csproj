@@ -16,4 +16,8 @@
     <Folder Include="Validators\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CondominiumApi.Domain\CondominiumApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

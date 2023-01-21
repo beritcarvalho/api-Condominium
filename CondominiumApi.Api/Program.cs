@@ -1,4 +1,9 @@
+using CondominiumApi.Infrastructure.IoC.DependencyInjections;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Extension
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // Add services to the container.
 
