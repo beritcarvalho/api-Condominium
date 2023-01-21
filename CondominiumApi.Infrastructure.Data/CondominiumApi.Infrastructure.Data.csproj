@@ -8,9 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Configurations\EntityConfigurations\" />
-    <Folder Include="Contexts\" />
     <Folder Include="Migrations\" />
     <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
   </ItemGroup>
 
   <ItemGroup>
