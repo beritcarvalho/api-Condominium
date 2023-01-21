@@ -10,4 +10,10 @@
     <Folder Include="DependencyInjections\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CondominiumApi.Applications\CondominiumApi.Applications.csproj" />
+    <ProjectReference Include="..\CondominiumApi.Domain\CondominiumApi.Domain.csproj" />
+    <ProjectReference Include="..\CondominiumApi.Infrastructure.Data\CondominiumApi.Infrastructure.Data.csproj" />
+  </ItemGroup>
+
 </Project>

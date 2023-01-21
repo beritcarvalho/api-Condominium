@@ -13,4 +13,8 @@
     <Folder Include="Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CondominiumApi.Domain\CondominiumApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
