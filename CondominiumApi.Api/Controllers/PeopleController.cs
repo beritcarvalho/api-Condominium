@@ -14,10 +14,17 @@ namespace CondominiumApi.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync() 
+        public async Task<IActionResult> GetAllPeople() 
         {
             var people = await _personService.GetAll();
             return Ok(people);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetPersonById([FromRoute] Guid id)
+        {
+            var person = await _personService.GetById(id);
+            return Ok(person);
         }
     }
 }
