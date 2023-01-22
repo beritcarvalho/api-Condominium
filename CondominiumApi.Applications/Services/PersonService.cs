@@ -83,7 +83,8 @@ namespace CondominiumApi.Applications.Services
             catch (Exception exception)
             {
                 throw new Exception("ERR-PSX02 Falha interna no servidor");
-            }            
+            }
+            
         }
 
         public async Task<PersonViewModel> RemoveById(int id)

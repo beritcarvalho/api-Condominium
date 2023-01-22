@@ -1,4 +1,5 @@
-﻿using CondominiumApi.Applications.Interfaces;
+﻿using CondominiumApi.Applications.Dtos.ViewModels;
+using CondominiumApi.Applications.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumApi.Api.Controllers
@@ -16,15 +17,32 @@ namespace CondominiumApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPeople() 
         {
-            var people = await _personService.GetAll();
-            return Ok(people);
+            try
+            {
+                var people = await _personService.GetAll();
+
+                if (people == null)
+                    return NotFound(new ResultViewModel<IList<PersonViewModel>>("Nenhum cadastro encontrado"));
+                
+                return Ok(new ResultViewModel<IList<PersonViewModel>>(people));
+            }
+            catch(Exception exception) 
+            {
+                var teste = exception;
+                var teste2 = exception.Message;
+                return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(exception.Message));
+            }
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetPersonById([FromRoute] Guid id)
         {
             var person = await _personService.GetById(id);
-            return Ok(person);
+
+            if (person == null)
+                return NotFound(new ResultViewModel<PersonViewModel>("Cadastro não encontrado"));
+
+            return Ok(new ResultViewModel<PersonViewModel>(person));
         }
     }
 }

@@ -30,6 +30,6 @@ namespace CondominiumApi.Applications.Dtos.ViewModels
         }
 
         public T Data { get; set; }
-        public List<string> Errors { get; set; }
+        public List<string> Errors { get; set; } = new List<string>();
     }
 }
