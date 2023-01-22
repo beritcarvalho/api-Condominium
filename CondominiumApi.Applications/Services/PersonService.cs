@@ -1,4 +1,5 @@
-﻿using CondominiumApi.Applications.Dtos.InputModels;
+﻿using AutoMapper;
+using CondominiumApi.Applications.Dtos.InputModels;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Entities;
@@ -14,9 +15,11 @@ namespace CondominiumApi.Applications.Services
     public class PersonService : IPersonService
     {
         private readonly IPersonRepository _personRepository;
-        public PersonService(IPersonRepository personRepository)
+        private readonly IMapper _mapper;
+        public PersonService(IPersonRepository personRepository, IMapper mapper)
         {
             _personRepository = personRepository;
+            _mapper = mapper;
         }
 
         public async Task<IList<PersonViewModel>> GetAll() 
@@ -32,17 +35,7 @@ namespace CondominiumApi.Applications.Services
                 var list = new List<PersonViewModel>();
                 foreach (var person in people)
                 {
-                    list.Add(new PersonViewModel
-                    {
-                        Id = person.Id,
-                        First_Name = person.First_Name,
-                        Last_Name = person.Last_Name,
-                        Cpf = person.Cpf,
-                        Phone = person.Phone,
-                        Email = person.Email,
-                        Create_Date = person.Create_Date,
-                        Last_Update_Date = person.Last_Update_Date
-                    });
+                    list.Add(_mapper.Map<PersonViewModel>(person));
                 };
 
                 return list;
@@ -66,17 +59,7 @@ namespace CondominiumApi.Applications.Services
                 if (person == null)
                     return null;
 
-                var resultPerson = new PersonViewModel
-                {
-                    Id = person.Id,
-                    First_Name = person.First_Name,
-                    Last_Name = person.Last_Name,
-                    Cpf = person.Cpf,
-                    Phone = person.Phone,
-                    Email = person.Email,
-                    Create_Date = person.Create_Date,
-                    Last_Update_Date = person.Last_Update_Date
-                };
+                var resultPerson = _mapper.Map<PersonViewModel>(person);
 
                 return resultPerson;
             }
