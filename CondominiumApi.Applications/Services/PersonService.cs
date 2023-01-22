@@ -1,6 +1,7 @@
 ﻿using CondominiumApi.Applications.Dtos.InputModels;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
+using CondominiumApi.Domain.Entities;
 using CondominiumApi.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,53 @@ namespace CondominiumApi.Applications.Services
         }
 
         public async Task<IList<PersonViewModel>> GetAll() 
-        {            
-            var list = new List<PersonViewModel>();
-            var people = await _personRepository.GetAllAsync();
-
-            foreach (var person in people)
+        {
+            try
             {
-                list.Add(new PersonViewModel
+                var people = await _personRepository.GetAllAsync();
+
+
+                if (people.Count == 0)
+                    return null;
+
+                var list = new List<PersonViewModel>();
+                foreach (var person in people)
+                {
+                    list.Add(new PersonViewModel
+                    {
+                        Id = person.Id,
+                        First_Name = person.First_Name,
+                        Last_Name = person.Last_Name,
+                        Cpf = person.Cpf,
+                        Phone = person.Phone,
+                        Email = person.Email,
+                        Create_Date = person.Create_Date,
+                        Last_Update_Date = person.Last_Update_Date
+                    });
+                };
+
+                return list;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("ERR-PSX01 Falha interna no servidor");
+            }
+        }
+        public async Task<PersonViewModel> AddAccount(PersonInputModel input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PersonViewModel> GetById(Guid id)
+        {
+            try
+            {
+                var person = await _personRepository.GetByIdAsync(id);
+
+                if (person == null)
+                    return null;
+
+                var resultPerson = new PersonViewModel
                 {
                     Id = person.Id,
                     First_Name = person.First_Name,
@@ -35,19 +76,14 @@ namespace CondominiumApi.Applications.Services
                     Email = person.Email,
                     Create_Date = person.Create_Date,
                     Last_Update_Date = person.Last_Update_Date
-                });
-            };     
-      
-            return list;
-        }
-        public async Task<PersonViewModel> AddAccount(PersonInputModel input)
-        {
-            throw new NotImplementedException();
-        }
+                };
 
-        public async Task<PersonViewModel> GetById(int id)
-        {
-            throw new NotImplementedException();
+                return resultPerson;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("ERR-PSX02 Falha interna no servidor");
+            }            
         }
 
         public async Task<PersonViewModel> RemoveById(int id)

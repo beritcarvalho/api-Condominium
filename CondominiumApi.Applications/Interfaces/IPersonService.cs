@@ -11,7 +11,7 @@ namespace CondominiumApi.Applications.Interfaces
     public interface IPersonService
     {
         Task<IList<PersonViewModel>> GetAll();
-        Task<PersonViewModel> GetById(int id);
+        Task<PersonViewModel> GetById(Guid id);
         Task<PersonViewModel> AddAccount(PersonInputModel input);
         Task<PersonViewModel> UpdateAccount(PersonInputModel input);
         Task<PersonViewModel> RemoveById(int id);
