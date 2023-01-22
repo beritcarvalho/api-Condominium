@@ -36,7 +36,19 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
             return entity;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public T GetById(Guid id)
+        {
+            var entity = Context.Set<T>().Find(id);
+            return entity;
+        }
+
+        public async Task<T> GetByIdAsync(decimal id)
+        {
+            var entity = await Context.Set<T>().FindAsync(id);
+            return entity;
+        }
+
+        public async Task<T> GetByIdAsync(Guid id)
         {
             var entity = await Context.Set<T>().FindAsync(id);
             return entity;

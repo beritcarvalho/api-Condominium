@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CondominiumApi.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
             : base(options)
         {
         }
+
+        public DbSet<Person> People { get; set; }
+
     }
 }

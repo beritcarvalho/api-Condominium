@@ -1,9 +1,17 @@
+using CondominiumApi.Applications.Interfaces;
+using CondominiumApi.Applications.Services;
+using CondominiumApi.Domain.Interfaces;
+using CondominiumApi.Infrastructure.Data.Repositories;
 using CondominiumApi.Infrastructure.IoC.DependencyInjections;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Extension
 builder.Services.AddInfrastructure(builder.Configuration);
+
+//Scoped
+builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 // Add services to the container.
 
