@@ -27,9 +27,7 @@ namespace CondominiumApi.Api.Controllers
                 return Ok(new ResultViewModel<IList<PersonViewModel>>(people));
             }
             catch(Exception exception) 
-            {
-                var teste = exception;
-                var teste2 = exception.Message;
+            {               
                 return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(exception.Message));
             }
         }
