@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Dtos\InputModels\" />
     <Folder Include="Dtos\ValueObjects\" />
-    <Folder Include="Dtos\ViewModels\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Mappings\" />
     <Folder Include="Services\" />
