@@ -14,9 +14,10 @@ namespace CondominiumApi.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll() 
+        public async Task<IActionResult> GetAllAsync() 
         {
-            return Ok();
+            var people = await _personService.GetAll();
+            return Ok(people);
         }
     }
 }
