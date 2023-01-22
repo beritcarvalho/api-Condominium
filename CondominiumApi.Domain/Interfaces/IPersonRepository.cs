@@ -9,5 +9,6 @@ namespace CondominiumApi.Domain.Interfaces
 {
     public interface IPersonRepository : IBaseRepository<Person>
     {
+        Task<Person> GetByIdAsync(Guid id);
     }
 }
