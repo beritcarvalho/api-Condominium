@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CondominiumApi.Domain.Entities
 {
+    [Table("Person")]
     public class Person : Entity
     {
         public string First_Name { get; set; }
