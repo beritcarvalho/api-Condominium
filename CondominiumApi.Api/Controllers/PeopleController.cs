@@ -48,8 +48,15 @@ namespace CondominiumApi.Api.Controllers
         [HttpPost("/newperson")]
         public async Task<IActionResult> RegisterNewPerson([FromBody] PersonInputModel newPerson)
         {
-            var person = await _personService.AddPerson(newPerson);
-            return Created($"/newperson/{person.Id}", new ResultViewModel<PersonViewModel>(person));            
+            try
+            {
+                var person = await _personService.AddPerson(newPerson);
+                return Created($"/newperson/{person.Id}", new ResultViewModel<PersonViewModel>(person));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(exception.Message));
+            }
         }
 
         [HttpGet("/guid")]
