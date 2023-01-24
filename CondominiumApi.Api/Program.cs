@@ -7,13 +7,7 @@ using CondominiumApi.Infrastructure.IoC.DependencyInjections;
 var builder = WebApplication.CreateBuilder(args);
 
 //Extension
-builder.Services.AddInfrastructure(builder.Configuration);
-
-//Scoped
-builder.Services.AddScoped<IPersonService, PersonService>();
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-
-// Add services to the container.
+builder.Services.AddDependencyInjection(builder.Configuration);
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
