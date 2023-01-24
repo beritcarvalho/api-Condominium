@@ -45,9 +45,16 @@ namespace CondominiumApi.Applications.Services
                 throw new Exception("ERR-PSX01 Falha interna no servidor");
             }
         }
-        public async Task<PersonViewModel> AddAccount(PersonInputModel input)
+        public async Task<PersonViewModel> AddPerson(PersonInputModel input)
         {
-            throw new NotImplementedException();
+            var newPerson = _mapper.Map<Person>(input);
+
+            newPerson.Create_Date = DateTime.Now;
+            newPerson.Last_Update_Date = DateTime.Now;
+            
+            await _personRepository.InsertAsync(newPerson);
+
+            return _mapper.Map<PersonViewModel>(newPerson);         
         }
 
         public async Task<PersonViewModel> GetById(Guid id)

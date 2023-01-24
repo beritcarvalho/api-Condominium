@@ -1,6 +1,8 @@
-﻿using CondominiumApi.Applications.Dtos.ViewModels;
+﻿using CondominiumApi.Applications.Dtos.InputModels;
+using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Principal;
 
 namespace CondominiumApi.Api.Controllers
 {
@@ -41,6 +43,13 @@ namespace CondominiumApi.Api.Controllers
                 return NotFound(new ResultViewModel<PersonViewModel>("Cadastro não encontrado"));
 
             return Ok(new ResultViewModel<PersonViewModel>(person));
+        }
+
+        [HttpPost("/newperson")]
+        public async Task<IActionResult> RegisterNewPerson([FromBody] PersonInputModel newPerson)
+        {
+            var person = await _personService.AddPerson(newPerson);
+            return Created($"/newperson/{person.Id}", new ResultViewModel<PersonViewModel>(person));            
         }
 
         [HttpGet("/guid")]

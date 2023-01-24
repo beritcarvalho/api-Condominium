@@ -12,7 +12,7 @@ namespace CondominiumApi.Applications.Interfaces
     {
         Task<IList<PersonViewModel>> GetAll();
         Task<PersonViewModel> GetById(Guid id);
-        Task<PersonViewModel> AddAccount(PersonInputModel input);
+        Task<PersonViewModel> AddPerson(PersonInputModel input);
         Task<PersonViewModel> UpdateAccount(PersonInputModel input);
         Task<PersonViewModel> RemoveById(int id);
     }
