@@ -94,9 +94,30 @@ namespace CondominiumApi.Applications.Services
             throw new NotImplementedException();
         }
 
-        public async Task<PersonViewModel> UpdateAccount(PersonInputModel input)
+        public async Task<PersonViewModel> UpdateAccount(PersonUpdateInputModel input)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var person = await _personRepository.GetByIdAsync(input.Id);
+
+                if (person == null)
+                    return null;
+
+                _mapper.Map(input, person);
+
+                person.Last_Update_Date = DateTime.UtcNow;
+
+                await _personRepository.UpdateAsync(person);
+                return _mapper.Map<PersonViewModel>(person);
+            }
+            catch (DbUpdateException e)
+            {
+                throw new Exception("ERR-PSX04 Não foi possível atualizar o cadastro");
+            }
+            catch
+            {
+                throw new Exception("ERR-PSX04 Falha interna no servidor");
+            }
         }
     }
 }
