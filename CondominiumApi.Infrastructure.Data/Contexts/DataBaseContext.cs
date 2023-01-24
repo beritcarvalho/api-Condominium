@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserApi.Infrastructure.Data.Configurations.EntityConfigurations;
 
 namespace CondominiumApi.Infrastructure.Data.Contexts
 {
@@ -17,5 +18,11 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
 
         public DbSet<Person> People { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new PersonConfiguration());
+
+        }
     }
 }

@@ -42,5 +42,13 @@ namespace CondominiumApi.Api.Controllers
 
             return Ok(new ResultViewModel<PersonViewModel>(person));
         }
+
+        [HttpGet("/guid")]
+        public async Task<IActionResult> GetNewGuid()
+        {
+            var guid = Guid.NewGuid();   
+
+            return Ok(new ResultViewModel<Guid>(guid));
+        }
     }
 }
