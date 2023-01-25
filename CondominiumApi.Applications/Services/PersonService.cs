@@ -7,6 +7,7 @@ using CondominiumApi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace CondominiumApi.Applications.Services
                 throw new Exception("ERR-PSX01 Falha interna no servidor");
             }
         }
+
         public async Task<PersonViewModel> AddPerson(PersonInputModel input)
         {
             try
@@ -59,7 +61,7 @@ namespace CondominiumApi.Applications.Services
 
                 return _mapper.Map<PersonViewModel>(newPerson);
             }
-            catch (DbUpdateException exception)
+            catch (DbException exception)
             {
                 throw new Exception("ERR-PSX03 Não foi possível realizar o cadastro");
             }
@@ -89,9 +91,26 @@ namespace CondominiumApi.Applications.Services
             
         }
 
-        public async Task<PersonViewModel> RemoveById(int id)
+        public async Task<PersonViewModel> RemoveById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var person = await _personRepository.GetByIdAsync(id);
+
+                if (person == null)
+                    return null;
+
+                await _personRepository.RemoveAsync(person);
+                return _mapper.Map<PersonViewModel>(person);
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Não foi possível deletar o cadastro");
+            }
+            catch
+            {
+                throw new Exception("ERR-PSX05 Falha interna no servidor");
+            }
         }
 
         public async Task<PersonViewModel> UpdateAccount(PersonUpdateInputModel input)
@@ -119,5 +138,6 @@ namespace CondominiumApi.Applications.Services
                 throw new Exception("ERR-PSX04 Falha interna no servidor");
             }
         }
+
     }
 }

@@ -14,6 +14,6 @@ namespace CondominiumApi.Applications.Interfaces
         Task<PersonViewModel> GetById(Guid id);
         Task<PersonViewModel> AddPerson(PersonInputModel input);
         Task<PersonViewModel> UpdateAccount(PersonUpdateInputModel input);
-        Task<PersonViewModel> RemoveById(int id);
+        Task<PersonViewModel> RemoveById(Guid id);
     }
 }
