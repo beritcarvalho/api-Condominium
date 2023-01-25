@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace CondominiumApi.Domain.Entities
 {
-    [Table("Person")]
-    public class Person : Entity
+    
+    public class Person
     {
+        public Guid Id { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Cpf { get; set; }

@@ -22,7 +22,7 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new PersonConfiguration());
-
+            builder.ApplyConfiguration(new ApartmentConfiguration());
         }
     }
 }
