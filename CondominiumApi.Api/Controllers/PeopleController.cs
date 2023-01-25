@@ -1,6 +1,8 @@
-﻿using CondominiumApi.Applications.Dtos.InputModels;
+﻿using CondominiumApi.Api.Extensions;
+using CondominiumApi.Applications.Dtos.InputModels;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
+using CondominiumApi.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 
@@ -56,6 +58,24 @@ namespace CondominiumApi.Api.Controllers
             catch (Exception exception)
             {
                 return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(exception.Message));
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdatePersonData([FromBody] PersonUpdateInputModel inputPerson)
+        {
+            try
+            {
+                var person = await _personService.UpdateAccount(inputPerson);
+
+                if (person == null)
+                    return NotFound(new ResultViewModel<List<PersonViewModel>>("ERR-C02X01 Cadastro não encontrado"));
+
+                return Ok(new ResultViewModel<PersonViewModel>(person)); ;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(e.Message));
             }
         }
 

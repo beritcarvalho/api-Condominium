@@ -18,6 +18,7 @@ namespace CondominiumApi.Applications.Mappings
             
             CreateMap<Person, PersonViewModel>();      
             CreateMap<PersonInputModel, Person>();
+            CreateMap<PersonUpdateInputModel, Person>();
 
             #endregion
         }
