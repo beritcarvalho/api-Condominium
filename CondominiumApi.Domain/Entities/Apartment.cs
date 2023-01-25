@@ -9,9 +9,12 @@ namespace CondominiumApi.Domain.Entities
     public class Apartment
     {
         public int Id { get; set; }
-        public int Number { get; set; }       
-        
-        public Guid Owner_Id { get; set; }
-        public Guid Resident_Id { get; set; }
+        public int Number { get; set; }
+
+        public Guid OwnerId { get; set; }
+        public Person Owner { get; set; }
+
+        public Guid PersonId { get; set; }
+        public Person Person { get; set; }
     }
 }
