@@ -4,6 +4,7 @@ using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Entities;
 using CondominiumApi.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,27 @@ namespace CondominiumApi.Applications.Services
                 throw new Exception("ERR-PSX01 Falha interna no servidor");
             }
         }
-        public async Task<PersonViewModel> AddAccount(PersonInputModel input)
+        public async Task<PersonViewModel> AddPerson(PersonInputModel input)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var newPerson = _mapper.Map<Person>(input);
+
+                newPerson.Create_Date = DateTime.Now;
+                newPerson.Last_Update_Date = DateTime.Now;
+
+                await _personRepository.InsertAsync(newPerson);
+
+                return _mapper.Map<PersonViewModel>(newPerson);
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new Exception("ERR-PSX03 Não foi possível realizar o cadastro");
+            }
+            catch
+            {
+                throw new Exception("ERR-PSX03 Falha interna no servidor");
+            }
         }
 
         public async Task<PersonViewModel> GetById(Guid id)
