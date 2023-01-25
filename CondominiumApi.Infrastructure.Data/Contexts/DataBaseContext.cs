@@ -17,6 +17,7 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
         }
 
         public DbSet<Person> People { get; set; }
+        public DbSet<Apartment> Apartments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
