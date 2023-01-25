@@ -69,7 +69,7 @@ namespace CondominiumApi.Api.Controllers
                 var person = await _personService.UpdateAccount(inputPerson);
 
                 if (person == null)
-                    return NotFound(new ResultViewModel<List<PersonViewModel>>("ERR-C02X01 Cadastro não encontrado"));
+                    return NotFound(new ResultViewModel<List<PersonViewModel>>("ERR-PCX01 Cadastro não encontrado"));
 
                 return Ok(new ResultViewModel<PersonViewModel>(person)); ;
             }
@@ -78,6 +78,25 @@ namespace CondominiumApi.Api.Controllers
                 return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(e.Message));
             }
         }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> RemoveAccount([FromRoute] Guid id)
+        {
+            try
+            {
+                var person = await _personService.RemoveById(id);
+
+                if (person == null)
+                    return NotFound(new ResultViewModel<List<PersonViewModel>>("ERR-PCX02 Cadastro não encontrado"));
+
+                return Ok(new ResultViewModel<PersonViewModel>(person));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(e.Message));
+            }
+        }
+
 
         [HttpGet("/guid")]
         public async Task<IActionResult> GetNewGuid()
