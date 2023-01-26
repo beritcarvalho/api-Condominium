@@ -18,5 +18,9 @@ namespace CondominiumApi.Domain.Entities
         public string Email { get; set; }
         public DateTime Create_Date { get; set; }
         public DateTime? Last_Update_Date { get; set; }
+
+        public Apartment ApartmentOwner { get; set; }
+        public Apartment ApartmentResident { get; set; }
+
     }
 }

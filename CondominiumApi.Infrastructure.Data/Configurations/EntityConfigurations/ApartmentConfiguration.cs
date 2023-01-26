@@ -26,117 +26,58 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #endregion
 
+            #region ForeignKey
+            
+            builder
+                .HasOne(apart => apart.Owner)
+                .WithOne(person => person.ApartmentOwner)
+                .HasForeignKey<Apartment>(apart => apart.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction).HasConstraintName("FK_Apartment_Owner_PersonId");
+
+            builder.HasOne(apart => apart.Resident)
+                .WithOne(person => person.ApartmentResident)
+                .HasForeignKey<Apartment>(apart => apart.ResidentId)
+                .OnDelete(DeleteBehavior.NoAction).HasConstraintName("FK_Apartment_Resident_PersonId");
+            
+            #endregion
+
             #region Constrainsts
-            /*
-            builder.Property(person => person.First_Name)
+            
+            builder.Property(apart => apart.Number)
                 .IsRequired()
-                .HasColumnName("First_Name")
-                .HasColumnType("NVARCHAR")
-                .HasMaxLength(30)
-                .HasComment("Nome");
+                .HasColumnName("Number")
+                .HasColumnType("INT")
+                .HasComment("Numero do Apartamento");
 
-            builder.Property(person => person.Last_Name)
+            builder.Property(apart => apart.OwnerId)
                 .IsRequired()
-                .HasColumnName("Last_Name")
-                .HasColumnType("NVARCHAR")
-                .HasMaxLength(30)
-                .HasComment("Sobrenome");
+                .HasComment("Chave da tabela de Pessoa");
 
-            builder.Property(person => person.Cpf)
-                .IsRequired()
-                .HasColumnName("Cpf")
-                .HasColumnType("VARCHAR")
-                .HasMaxLength(11)
-                .HasComment("CPF");
+            builder.Property(apart => apart.ResidentId)
+                .HasComment("Chave da tabela de Pessoa");
 
-            builder.Property(person => person.Phone)
-                .IsRequired()
-                .HasColumnName("Phone")
-                .HasColumnType("VARCHAR")
-                .HasMaxLength(11)
-                .HasComment("Telefone para contato");
-
-            builder.Property(person => person.Email)
-                .IsRequired()
-                .HasColumnName("Email")
-                .HasColumnType("VARCHAR")
-                .HasMaxLength(50)
-                .HasComment("Email");
-
-            builder.Property(person => person.Create_Date)
-                .IsRequired()
-                .HasColumnName("Create_Date")
-                .HasColumnType("DATETIME")
-                .HasDefaultValueSql("GETDATE()")
-                .HasComment("Data de Criação do Cadastro");
-
-            builder.Property(person => person.Last_Update_Date)
-                .IsRequired()
-                .HasColumnName("Last_Update_Date")
-                .HasColumnType("DATETIME")
-                .HasDefaultValueSql("GETDATE()")
-                .HasComment("Ultima atualização do cadastro");*/
             #endregion
 
             #region Indexes
-            /*
-            builder.HasIndex(x => x.Email, "IX_Person_Email")
+
+            builder.HasIndex(apart => apart.OwnerId, "IX_Apartment_OwnerId")
                 .IsUnique();
 
-            builder.HasIndex(x => x.Cpf, "IX_Person_Cpf")
+            builder.HasIndex(apart => apart.ResidentId, "IX_Apartment_ResidentId")
                 .IsUnique();
-            */
+
             #endregion
 
             #region PopulationData
-            /*
+
             builder.HasData(
-                new Person
+                new Apartment
                 {
-                    Id = Guid.Parse("6fd401e3-fb52-4eed-b7df-28c99753ae55"),
-                    First_Name = "Admin",
-                    Last_Name = "System",
-                    Cpf = "0124567890",
-                    Phone = "11987654321",
-                    Email = "admin@admin.com"
-                },
-            new Person
-            {
-                Id = Guid.Parse("5a7a5658-ccbc-4451-b4bc-5a0264bd0a81"),
-                First_Name = "Garen",
-                Last_Name = "Stemmaguarda",
-                Cpf = "11122233344",
-                Phone = "11987654322",
-                Email = "garen@stemmaguarda.com"
-            },
-            new Person
-            {
-                Id = Guid.Parse("495dadfc-add1-4826-bde8-828c9b0c0134"),
-                First_Name = "Lux",
-                Last_Name = "Stemmaguarda",
-                Cpf = "22233344455",
-                Phone = "11987654322",
-                Email = "lux@stemmaguarda.com"
-            },
-            new Person
-            {
-                Id = Guid.Parse("59de6d3b-2002-42fa-80e3-057f2cfc5cae"),
-                First_Name = "Annie",
-                Last_Name = "Hastur",
-                Cpf = "22233344456",
-                Phone = "11987654322",
-                Email = "annie@hastur.com"
-            },
-            new Person
-            {
-                Id = Guid.Parse("e69cb7b8-164c-41ed-a670-7b40480c3887"),
-                First_Name = "Ashe",
-                Last_Name = "Avarosa",
-                Cpf = "33344455566",
-                Phone = "11987654323",
-                Email = "ashe@avarosa.com"
-            });
-            */
+                    Id = 1,
+                    Number = 1,
+                    OwnerId = Guid.Parse("6fd401e3-fb52-4eed-b7df-28c99753ae55")
+                });
+
             #endregion
 
         }

@@ -14,7 +14,7 @@ namespace CondominiumApi.Domain.Entities
         public Guid OwnerId { get; set; }
         public Person Owner { get; set; }
 
-        public Guid PersonId { get; set; }
-        public Person Person { get; set; }
+        public Guid? ResidentId { get; set; }
+        public Person? Resident { get; set; }
     }
 }
