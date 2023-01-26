@@ -11,6 +11,9 @@ namespace CondominiumApi.Domain.Entities
         public int Id { get; set; }
         public int Number { get; set; }
 
+        public int BlockId { get; set; }
+        public BlockOfApartment Block { get; set; }
+
         public Guid OwnerId { get; set; }
         public Person Owner { get; set; }
 

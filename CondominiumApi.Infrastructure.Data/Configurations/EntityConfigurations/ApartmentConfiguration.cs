@@ -32,17 +32,25 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasOne(apart => apart.Owner)
                 .WithOne(person => person.ApartmentOwner)
                 .HasForeignKey<Apartment>(apart => apart.OwnerId)
-                .OnDelete(DeleteBehavior.NoAction).HasConstraintName("FK_Apartment_Owner_PersonId");
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Apartment_Owner_PersonId");
 
             builder.HasOne(apart => apart.Resident)
                 .WithOne(person => person.ApartmentResident)
                 .HasForeignKey<Apartment>(apart => apart.ResidentId)
-                .OnDelete(DeleteBehavior.NoAction).HasConstraintName("FK_Apartment_Resident_PersonId");
-            
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Apartment_Resident_PersonId");
+
+            builder
+                .HasOne(apart => apart.Block)
+                .WithMany(block => block.Apartments)
+                .HasForeignKey(apart => apart.BlockId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             #endregion
 
             #region Constrainsts
-            
+
             builder.Property(apart => apart.Number)
                 .IsRequired()
                 .HasColumnName("Number")
@@ -66,6 +74,10 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             builder.HasIndex(apart => apart.ResidentId, "IX_Apartment_ResidentId")
                 .IsUnique();
 
+
+            builder.HasIndex(apart => new {apart.Number, apart.BlockId}, "IX_Apartment_Block")
+                .IsUnique();
+
             #endregion
 
             #region PopulationData
@@ -75,6 +87,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                 {
                     Id = 1,
                     Number = 1,
+                    BlockId = 1,
                     OwnerId = Guid.Parse("6fd401e3-fb52-4eed-b7df-28c99753ae55")
                 });
 
