@@ -30,6 +30,12 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         }
 
         //Read
+        public T GetById(int id)
+        {
+            var entity = Context.Set<T>().Find(id);
+            return entity;
+        }
+
         public T GetById(decimal id)
         {
             var entity = Context.Set<T>().Find(id);
@@ -39,6 +45,12 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         public T GetById(Guid id)
         {
             var entity = Context.Set<T>().Find(id);
+            return entity;
+        }
+
+        public async Task<T> GetByIdAsync(int id)
+        {
+            var entity = await Context.Set<T>().FindAsync(id);
             return entity;
         }
 

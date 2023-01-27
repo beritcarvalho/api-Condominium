@@ -17,12 +17,15 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
         }
 
         public DbSet<Person> People { get; set; }
+        public DbSet<BlockOfApartment> Blocks{ get; set; }
+        public DbSet<Apartment> Apartments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new PersonConfiguration());
-
+            builder.ApplyConfiguration(new ApartmentConfiguration());
+            builder.ApplyConfiguration(new BlockConfiguration());
         }
     }
 }
