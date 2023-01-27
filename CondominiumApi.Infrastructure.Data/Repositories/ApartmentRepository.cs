@@ -1,4 +1,5 @@
 ﻿using CondominiumApi.Domain.Entities;
+using CondominiumApi.Domain.Interfaces;
 using CondominiumApi.Infrastructure.Data.Contexts;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CondominiumApi.Infrastructure.Data.Repositories
 {
-    public class ApartmentRepository : BaseRepository<Apartment>
+    public class ApartmentRepository : BaseRepository<Apartment>, IApartmentRepository
     {
         public ApartmentRepository(DataBaseContext context) : base(context)
         {
