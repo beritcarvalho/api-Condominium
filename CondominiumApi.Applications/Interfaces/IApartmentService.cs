@@ -9,7 +9,7 @@ namespace CondominiumApi.Applications.Interfaces
 {
     public interface IApartmentService
     {
-        Task<ApartmentViewModel> GetAll();
+        Task<List<ApartmentViewModel>> GetAll();
         Task<ApartmentViewModel> GetByIdWithInclude(int idApartment);
     }
 }

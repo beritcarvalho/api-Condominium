@@ -14,8 +14,15 @@ namespace CondominiumApi.Api.Controllers
             _apartmentService = apartmentService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllApartments()
+        {
+            var apartments = await _apartmentService.GetAll();
+            return Ok(apartments);
+        }
+
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAccountId([FromRoute] int id)
+        public async Task<IActionResult> GetApartmentById([FromRoute] int id)
         {
             var apartment = await _apartmentService.GetByIdWithInclude(id);
             return Ok(apartment);

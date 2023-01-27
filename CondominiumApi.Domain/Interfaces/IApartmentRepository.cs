@@ -9,7 +9,7 @@ namespace CondominiumApi.Domain.Interfaces
 {
     public interface IApartmentRepository : IBaseRepository<Apartment>
     {
-        Task<Apartment> GetByIdAsync(int id);
+        Task<List<Apartment>> GetAllWithIncludeAsync();
         Task<Apartment> GetByIdWithIncludeAsync(int id);
         Task<Apartment> UpdateAsync(Apartment updatedApartment);
     }

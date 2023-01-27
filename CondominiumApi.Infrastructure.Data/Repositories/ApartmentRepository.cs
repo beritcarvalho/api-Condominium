@@ -28,5 +28,19 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
 
             return entity;
         }
+
+        public async Task<List<Apartment>> GetAllWithIncludeAsync()
+        {
+            var entity = await Context
+                .Apartments
+                .AsNoTracking()              
+                .Include(bloc => bloc.BlockOfApartment)
+                .Include(bloc => bloc.Owner)
+                .Include(bloc => bloc.Resident)
+                .AsNoTracking()   
+                .ToListAsync();
+
+            return entity;
+        }
     }
 }
