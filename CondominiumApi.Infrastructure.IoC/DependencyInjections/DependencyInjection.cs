@@ -33,6 +33,8 @@ namespace CondominiumApi.Infrastructure.IoC.DependencyInjections
         private static void AddRepository(IServiceCollection services)
         {
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IApartmentRepository, ApartmentRepository>();
+            services.AddScoped<IBlockRepository, BlockRepository>();
         }     
     }
 }
