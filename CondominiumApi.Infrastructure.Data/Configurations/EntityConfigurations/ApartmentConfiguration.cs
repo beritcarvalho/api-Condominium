@@ -42,7 +42,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasConstraintName("FK_Apartment_Resident_PersonId");
 
             builder
-                .HasOne(apart => apart.Block)
+                .HasOne(apart => apart.BlockOfApartment)
                 .WithMany(block => block.Apartments)
                 .HasForeignKey(apart => apart.BlockId)
                 .OnDelete(DeleteBehavior.NoAction);
@@ -58,7 +58,6 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasComment("Numero do Apartamento");
 
             builder.Property(apart => apart.OwnerId)
-                .IsRequired()
                 .HasComment("Chave da tabela de Pessoa");
 
             builder.Property(apart => apart.ResidentId)

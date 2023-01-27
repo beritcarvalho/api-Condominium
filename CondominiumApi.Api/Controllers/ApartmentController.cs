@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CondominiumApi.Applications.Dtos.ViewModels;
+using CondominiumApi.Applications.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumApi.Api.Controllers
 {
@@ -6,10 +8,17 @@ namespace CondominiumApi.Api.Controllers
     [Route("v1/apartments")]
     public class ApartmentController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> Teste()
+        private readonly IApartmentService _apartmentService;
+        public ApartmentController(IApartmentService apartmentService)
         {
-            return Ok();
+            _apartmentService = apartmentService;
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAccountId([FromRoute] int id)
+        {
+            var apartment = await _apartmentService.GetByIdWithInclude(id);
+            return Ok(apartment);
         }
     }
 }
