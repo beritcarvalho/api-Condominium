@@ -9,7 +9,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.ToTable("Person", "Condominum")
+            builder.ToTable("Person", "Condominium")
                 .HasComment("Tabela de Pessoas Cadastradas");
 
             #region PrimaryKey

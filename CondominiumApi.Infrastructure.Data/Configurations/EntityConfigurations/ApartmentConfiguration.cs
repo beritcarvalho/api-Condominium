@@ -9,7 +9,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Apartment> builder)
         {
-            builder.ToTable("Apartment", "Condominum")
+            builder.ToTable("Apartment", "Condominium")
                 .HasComment("Tabela de Apartamentos");
 
             #region PrimaryKey
@@ -88,8 +88,24 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                     Id = 1,
                     Number = 1,
                     BlockId = 1,
-                    OwnerId = Guid.Parse("6fd401e3-fb52-4eed-b7df-28c99753ae55")
-                });
+                    OwnerId = Guid.Parse("5a7a5658-ccbc-4451-b4bc-5a0264bd0a81")
+                },
+                new Apartment
+                {
+                    Id = 2,
+                    Number = 1,
+                    BlockId = 2,
+                    OwnerId = Guid.Parse("495dadfc-add1-4826-bde8-828c9b0c0134"),
+                    ResidentId = Guid.Parse("495dadfc-add1-4826-bde8-828c9b0c0134")
+                },
+                new Apartment
+                {
+                    Id = 3,
+                    Number = 2,
+                    BlockId = 1,
+                    OwnerId = Guid.Parse("59de6d3b-2002-42fa-80e3-057f2cfc5cae"),
+                    ResidentId = Guid.Parse("e69cb7b8-164c-41ed-a670-7b40480c3887")
+                });               
 
             #endregion
 
