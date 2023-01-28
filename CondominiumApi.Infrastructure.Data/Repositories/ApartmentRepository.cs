@@ -16,9 +16,9 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         {
         }
 
-        public async Task<Apartment> GetByIdWithIncludeAsync(int id)
+        public async Task<Apartment> GetByIdWithInclude(int id)
         {
-            var entity = await Context
+            var apartment = await Context
                 .Apartments
                 .Where(apart => apart.Id == id)
                 .Include(bloc => bloc.BlockOfApartment)
@@ -26,21 +26,33 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
                 .Include(bloc => bloc.Resident)
                 .FirstOrDefaultAsync();
 
-            return entity;
+            return apartment;
         }
 
-        public async Task<List<Apartment>> GetAllWithIncludeAsync()
+        public async Task<List<Apartment>> GetAllWithInclude()
         {
-            var entity = await Context
-                .Apartments
-                .AsNoTracking()              
+            var apartment = await Context
+                .Apartments             
                 .Include(bloc => bloc.BlockOfApartment)
                 .Include(bloc => bloc.Owner)
                 .Include(bloc => bloc.Resident)
                 .AsNoTracking()   
                 .ToListAsync();
 
-            return entity;
+            return apartment;
+        }
+
+        public async Task<Apartment> GetByNumberAndBlockWithInclude(int number, int idblock)
+        {
+            var apartment = await Context
+                .Apartments
+                .Where(apart => apart.Number == number && apart.BlockId == idblock)
+                .Include(bloc => bloc.BlockOfApartment)
+                .Include(bloc => bloc.Owner)
+                .Include(bloc => bloc.Resident)
+                .FirstOrDefaultAsync();
+
+            return apartment;
         }
     }
 }

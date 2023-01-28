@@ -19,7 +19,7 @@ namespace CondominiumApi.Applications.Services
         private readonly IApartmentRepository _apartmentRepository;
         private readonly IBlockRepository _blockRepository;
         private readonly IPersonRepository _personRepository;
-        
+
         public ApartmentService(IMapper mapper,
             IApartmentRepository apartmentRepository,
             IBlockRepository blockRepository,
@@ -33,7 +33,7 @@ namespace CondominiumApi.Applications.Services
 
         public async Task<List<ApartmentViewModel>> GetAll()
         {
-            var apartments = await _apartmentRepository.GetAllWithIncludeAsync();
+            var apartments = await _apartmentRepository.GetAllWithInclude();
             var apartmentsResult = new List<ApartmentViewModel>();
 
             foreach (var apartment in apartments)
@@ -47,7 +47,7 @@ namespace CondominiumApi.Applications.Services
 
         public async Task<ApartmentViewModel> GetByIdWithInclude(int idApartment)
         {
-            var apartment = await _apartmentRepository.GetByIdWithIncludeAsync(idApartment);
+            var apartment = await _apartmentRepository.GetByIdWithInclude(idApartment);
 
             var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
 
@@ -57,8 +57,8 @@ namespace CondominiumApi.Applications.Services
         public async Task<ApartmentViewModel> InsertNewApartment(ApartmentInputModel newApartment)
         {
             var apartment = new Apartment();
-            
-            var idBlock = GetIdBlockOfApartment(newApartment.Block.ToUpper());
+
+            var idBlock = GetIdBlockOfApartment(newApartment.Block);
 
             if (idBlock == null)
                 return null;
@@ -67,26 +67,7 @@ namespace CondominiumApi.Applications.Services
 
             apartment.Number = newApartment.Number;
 
-            if (newApartment.OwnerCPF != null)
-            {
-                var owner = await _personRepository.GetPersonByCPF(newApartment.OwnerCPF);
-                if (owner == null)
-                    return null;
-
-                apartment.Owner = owner;
-            }
-
-            if (newApartment.OwnerCPF == null && newApartment.ResidentCPF != null)
-                return null;
-
-            if (newApartment.ResidentCPF != null)
-            {
-                var resident = await _personRepository.GetPersonByCPF(newApartment.ResidentCPF);
-                if (resident == null)
-                    return null;
-
-                apartment.Resident = resident;
-            }          
+            apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
 
             await _apartmentRepository.InsertAsync(apartment);
 
@@ -95,8 +76,28 @@ namespace CondominiumApi.Applications.Services
             return apartmentResult;
         }
 
+        public async Task<ApartmentViewModel> UpdateApartment(ApartmentInputModel newApartment)
+        {
+            var idBlock = GetIdBlockOfApartment(newApartment.Block);
+
+            if (idBlock == null)
+                return null;
+
+            var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
+
+            apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
+
+            if (apartment == null)
+                return null;
+
+            await _apartmentRepository.UpdateAsync(apartment);
+
+            return _mapper.Map<ApartmentViewModel>(apartment);
+        }
+
         private int? GetIdBlockOfApartment(string block)
         {
+            block = block.ToUpper();
             switch (block)
             {
                 case "A": return 1; break;
@@ -104,6 +105,41 @@ namespace CondominiumApi.Applications.Services
                 case "C": return 3; break;
                 default: return null; break;
             }
+        }
+
+        private async Task<Apartment> IncludeOwnerResidentDataAsync(Apartment apartment, string? OwnerCPF, string? ResidentCPF)
+        {
+            if (apartment.Owner != null && OwnerCPF == null)
+                throw new Exception("Invalido");
+
+            if (OwnerCPF != null)
+            {
+                var owner = await _personRepository.GetPersonByCPF(OwnerCPF);
+                if (owner == null)
+                    return null;
+
+                apartment.Owner = new Person();
+                apartment.Owner = owner;
+            }
+
+            if (OwnerCPF == null && ResidentCPF != null)
+                return null;
+
+            if(ResidentCPF == null)
+            {
+                apartment.Resident = null;
+            }
+
+            if (ResidentCPF != null)
+            {
+                var resident = await _personRepository.GetPersonByCPF(ResidentCPF);
+                if (resident == null)
+                    return null;
+
+                apartment.Resident = new Person();
+                apartment.Resident = resident;
+            }
+            return apartment;
         }
     }
 }

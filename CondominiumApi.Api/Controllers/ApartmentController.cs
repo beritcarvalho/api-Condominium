@@ -35,5 +35,13 @@ namespace CondominiumApi.Api.Controllers
             var apartment = await _apartmentService.InsertNewApartment(newApartment);
             return Ok(apartment);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateApartmentData([FromBody] ApartmentInputModel newApartment)
+        {
+            var apartment = await _apartmentService.UpdateApartment(newApartment);
+
+            return Ok(apartment);
+        }
     }
 }
