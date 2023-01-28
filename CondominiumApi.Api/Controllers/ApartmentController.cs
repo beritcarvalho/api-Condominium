@@ -85,7 +85,15 @@ namespace CondominiumApi.Api.Controllers
 
                 return Ok(apartment);
             }
-            catch(Exception exception)
+            catch(NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (Exception exception)
             {
                 return StatusCode(500, exception.Message);
             }
