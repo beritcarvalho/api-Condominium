@@ -14,5 +14,6 @@ namespace CondominiumApi.Applications.Interfaces
         Task<ApartmentViewModel> GetByIdWithInclude(int idApartment);
         Task<ApartmentViewModel> InsertNewApartment(ApartmentInputModel newApartment);
         Task<ApartmentViewModel> UpdateApartment(ApartmentInputModel newApartment);
+        Task<ApartmentViewModel> ResetApartmentData(ApartmentInputModel newApartment);
     }
 }

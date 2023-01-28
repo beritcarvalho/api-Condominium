@@ -43,5 +43,15 @@ namespace CondominiumApi.Api.Controllers
 
             return Ok(apartment);
         }
+
+
+
+        [HttpPut("ResetData")]
+        public async Task<IActionResult> ResetApartmentData([FromBody] ApartmentInputModel newApartment)
+        {
+            var apartment = await _apartmentService.ResetApartmentData(newApartment);
+
+            return Ok(apartment);
+        }        
     }
 }

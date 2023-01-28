@@ -76,6 +76,26 @@ namespace CondominiumApi.Applications.Services
             return apartmentResult;
         }
 
+        public async Task<ApartmentViewModel> ResetApartmentData(ApartmentInputModel newApartment)
+        {
+            var idBlock = GetIdBlockOfApartment(newApartment.Block);
+
+            if (idBlock == null)
+                return null;
+
+            var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
+
+            if (apartment == null)
+                return null;
+
+            apartment.Owner = null;
+            apartment.Resident = null;
+
+            await _apartmentRepository.UpdateAsync(apartment);
+
+            return _mapper.Map<ApartmentViewModel>(apartment);
+        }
+
         public async Task<ApartmentViewModel> UpdateApartment(ApartmentInputModel newApartment)
         {
             var idBlock = GetIdBlockOfApartment(newApartment.Block);
@@ -85,11 +105,11 @@ namespace CondominiumApi.Applications.Services
 
             var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
 
-            apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
-
             if (apartment == null)
                 return null;
 
+            apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
+      
             await _apartmentRepository.UpdateAsync(apartment);
 
             return _mapper.Map<ApartmentViewModel>(apartment);
