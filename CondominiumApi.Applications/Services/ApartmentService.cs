@@ -64,8 +64,9 @@ namespace CondominiumApi.Applications.Services
                 return null;
 
             apartment.BlockId = (int)idBlock;
-
             apartment.Number = newApartment.Number;
+            apartment.Create_Date = DateTime.Now;
+            apartment.Last_Update_Date = DateTime.Now;
 
             apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
 
@@ -90,6 +91,7 @@ namespace CondominiumApi.Applications.Services
 
             apartment.Owner = null;
             apartment.Resident = null;
+            apartment.Last_Update_Date = DateTime.Now;
 
             await _apartmentRepository.UpdateAsync(apartment);
 
@@ -109,6 +111,8 @@ namespace CondominiumApi.Applications.Services
                 return null;
 
             apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
+
+            apartment.Last_Update_Date = DateTime.Now;
       
             await _apartmentRepository.UpdateAsync(apartment);
 

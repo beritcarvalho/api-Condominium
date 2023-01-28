@@ -19,5 +19,8 @@ namespace CondominiumApi.Domain.Entities
 
         public Guid? ResidentId { get; set; }
         public Person? Resident { get; set; }
+
+        public DateTime Create_Date { get; set; }
+        public DateTime Last_Update_Date { get; set; }
     }
 }
