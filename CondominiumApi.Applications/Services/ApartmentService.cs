@@ -132,7 +132,7 @@ namespace CondominiumApi.Applications.Services
                 var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
 
                 if (apartment == null)
-                    throw new NotFoundException("ERR-APSX01 Apartamento encontrado");
+                    throw new NotFoundException("ERR-APSX01 Apartamento não encontrado");
 
                 apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
 
@@ -162,25 +162,43 @@ namespace CondominiumApi.Applications.Services
 
         public async Task<ApartmentViewModel> ResetApartmentData(ApartmentInputModel newApartment)
         {
-            var idBlock = GetIdBlockOfApartment(newApartment.Block);
+            try
+            {
+                var idBlock = GetIdBlockOfApartment(newApartment.Block);
 
-            if (idBlock == null)
-                return null;
+                if (idBlock == null)
+                    throw new NotFoundException("ERR-APSX03 O Bloco informado não foi encontrado");
 
-            var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
+                var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
 
-            if (apartment == null)
-                return null;
+                if (apartment == null)
+                    throw new NotFoundException("ERR-APSX02 Apartamento não encontrado");
 
-            apartment.Owner = null;
-            apartment.Resident = null;
-            apartment.Last_Update_Date = DateTime.Now;
+                apartment.Owner = null;
+                apartment.Resident = null;
+                apartment.Last_Update_Date = DateTime.Now;
 
-            await _apartmentRepository.UpdateAsync(apartment);
+                await _apartmentRepository.UpdateAsync(apartment);
 
-            return _mapper.Map<ApartmentViewModel>(apartment);
+                return _mapper.Map<ApartmentViewModel>(apartment);
+            }
+            catch (NotFoundException exception)
+            {
+                throw exception;
+            }
+            catch (ValidationException exception)
+            {
+                throw exception;
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new Exception("ERR-APSX02 Não foi possível atualizar os dados!");
+            }
+            catch
+            {
+                throw new Exception("ERR-APSX05 Falha interna no servidor");
+            }
         }
-
 
         private int? GetIdBlockOfApartment(string block)
         {

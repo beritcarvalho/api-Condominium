@@ -43,7 +43,7 @@ namespace CondominiumApi.Api.Controllers
 
                 if(apartment == null)
                 {
-                    return NotFound("ERR-APCX01 Apartamento encontrado");
+                    return NotFound("ERR-APCX01 Apartamento não encontrado");
                 }
 
                 return Ok(apartment);
@@ -99,14 +99,27 @@ namespace CondominiumApi.Api.Controllers
             }
         }
 
-
-
         [HttpPut("ResetData")]
         public async Task<IActionResult> ResetApartmentData([FromBody] ApartmentInputModel newApartment)
         {
-            var apartment = await _apartmentService.ResetApartmentData(newApartment);
+            try
+            {
+                var apartment = await _apartmentService.ResetApartmentData(newApartment);
 
-            return Ok(apartment);
+                return Ok(apartment);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
         }        
     }
 }
