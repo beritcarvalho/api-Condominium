@@ -24,7 +24,7 @@ namespace CondominiumApi.Api.Controllers
                 var apartments = await _apartmentService.GetAll();
 
                 if (apartments == null)
-                    return NotFound("Não foi encontrado nenhum apartamento");
+                    return NotFound("ERR-APCX01 Não foi encontrado nenhum apartamento");
 
                 return Ok(apartments);
             }
@@ -43,7 +43,7 @@ namespace CondominiumApi.Api.Controllers
 
                 if(apartment == null)
                 {
-                    return NotFound("Apartamento encontrado");
+                    return NotFound("ERR-APCX01 Apartamento encontrado");
                 }
 
                 return Ok(apartment);
@@ -79,9 +79,16 @@ namespace CondominiumApi.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateApartmentData([FromBody] ApartmentInputModel newApartment)
         {
-            var apartment = await _apartmentService.UpdateApartment(newApartment);
+            try
+            {
+                var apartment = await _apartmentService.UpdateApartment(newApartment);
 
-            return Ok(apartment);
+                return Ok(apartment);
+            }
+            catch(Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
         }
 
 

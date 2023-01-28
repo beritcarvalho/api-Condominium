@@ -6,6 +6,7 @@ using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Entities;
 using CondominiumApi.Domain.Exceptions;
 using CondominiumApi.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -118,6 +119,46 @@ namespace CondominiumApi.Applications.Services
                 throw new Exception("ERR-APSX03 Falha interna no servidor");
             }
         }
+                
+        public async Task<ApartmentViewModel> UpdateApartment(ApartmentInputModel newApartment)
+        {
+            try
+            {
+                var idBlock = GetIdBlockOfApartment(newApartment.Block);
+
+                if (idBlock == null)
+                    throw new NotFoundException("ERR-APSX02 O Bloco informado não foi encontrado");
+
+                var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
+
+                if (apartment == null)
+                    throw new NotFoundException("ERR-APSX01 Apartamento encontrado");
+
+                apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
+
+                apartment.Last_Update_Date = DateTime.Now;
+
+                await _apartmentRepository.UpdateAsync(apartment);
+
+                return _mapper.Map<ApartmentViewModel>(apartment);
+            }
+            catch(NotFoundException exception)
+            {
+                throw exception;
+            }
+            catch(ValidationException exception)
+            {
+                throw exception;
+            }
+            catch(DbUpdateException exception)
+            {
+                throw new Exception("ERR-APSX01 Não foi possível atualizar os dados!");
+            }
+            catch
+            {
+                throw new Exception("ERR-APSX04 Falha interna no servidor");
+            }
+        }
 
         public async Task<ApartmentViewModel> ResetApartmentData(ApartmentInputModel newApartment)
         {
@@ -140,26 +181,6 @@ namespace CondominiumApi.Applications.Services
             return _mapper.Map<ApartmentViewModel>(apartment);
         }
 
-        public async Task<ApartmentViewModel> UpdateApartment(ApartmentInputModel newApartment)
-        {
-            var idBlock = GetIdBlockOfApartment(newApartment.Block);
-
-            if (idBlock == null)
-                return null;
-
-            var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
-
-            if (apartment == null)
-                return null;
-
-            apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
-
-            apartment.Last_Update_Date = DateTime.Now;
-      
-            await _apartmentRepository.UpdateAsync(apartment);
-
-            return _mapper.Map<ApartmentViewModel>(apartment);
-        }
 
         private int? GetIdBlockOfApartment(string block)
         {
