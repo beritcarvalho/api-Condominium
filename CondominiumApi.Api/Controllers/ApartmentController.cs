@@ -18,8 +18,19 @@ namespace CondominiumApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllApartments()
         {
-            var apartments = await _apartmentService.GetAll();
-            return Ok(apartments);
+            try
+            {
+                var apartments = await _apartmentService.GetAll();
+
+                if (apartments == null)
+                    return NotFound("Não foi encontrado nenhum apartamento");
+
+                return Ok(apartments);
+            }
+            catch(Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
         }
 
         [HttpGet("{id:int}")]

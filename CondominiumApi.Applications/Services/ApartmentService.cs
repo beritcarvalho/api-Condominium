@@ -7,6 +7,7 @@ using CondominiumApi.Domain.Entities;
 using CondominiumApi.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,16 +34,27 @@ namespace CondominiumApi.Applications.Services
 
         public async Task<List<ApartmentViewModel>> GetAll()
         {
-            var apartments = await _apartmentRepository.GetAllWithInclude();
-            var apartmentsResult = new List<ApartmentViewModel>();
-
-            foreach (var apartment in apartments)
+            try
             {
-                var apartmentViewModel = _mapper.Map<ApartmentViewModel>(apartment);
-                apartmentsResult.Add(apartmentViewModel);
-            }
+                var apartments = await _apartmentRepository.GetAllWithInclude();
 
-            return apartmentsResult;
+                if (apartments == null)
+                    return null;
+
+                var apartmentsResult = new List<ApartmentViewModel>();
+
+                foreach (var apartment in apartments)
+                {
+                    var apartmentViewModel = _mapper.Map<ApartmentViewModel>(apartment);
+                    apartmentsResult.Add(apartmentViewModel);
+                }
+
+                return apartmentsResult;
+            }
+            catch
+            {
+                throw new Exception("ERR-APSX01 Falha interna no servidor");
+            }
         }
 
         public async Task<ApartmentViewModel> GetByIdWithInclude(int idApartment)
