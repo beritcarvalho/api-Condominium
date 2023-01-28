@@ -59,11 +59,21 @@ namespace CondominiumApi.Applications.Services
 
         public async Task<ApartmentViewModel> GetByIdWithInclude(int idApartment)
         {
-            var apartment = await _apartmentRepository.GetByIdWithInclude(idApartment);
+            try
+            {
+                var apartment = await _apartmentRepository.GetByIdWithInclude(idApartment);
 
-            var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
+                if (apartment == null)
+                    return null;
 
-            return apartmentResult;
+                var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
+
+                return apartmentResult;
+            }
+            catch
+            {
+                throw new Exception("ERR-APSX02 Falha interna no servidor");
+            }
         }
 
         public async Task<ApartmentViewModel> InsertNewApartment(ApartmentInputModel newApartment)

@@ -36,8 +36,21 @@ namespace CondominiumApi.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetApartmentById([FromRoute] int id)
         {
-            var apartment = await _apartmentService.GetByIdWithInclude(id);
-            return Ok(apartment);
+            try
+            {
+                var apartment = await _apartmentService.GetByIdWithInclude(id);
+
+                if(apartment == null)
+                {
+                    return NotFound("Apartamento encontrado");
+                }
+
+                return Ok(apartment);
+            }
+            catch(Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
         }
 
         [HttpPost("newApartment")]
