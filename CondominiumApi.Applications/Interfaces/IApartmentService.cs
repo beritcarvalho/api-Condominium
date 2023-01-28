@@ -1,4 +1,5 @@
-﻿using CondominiumApi.Applications.Dtos.ViewModels;
+﻿using CondominiumApi.Applications.Dtos.InputModels;
+using CondominiumApi.Applications.Dtos.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace CondominiumApi.Applications.Interfaces
     {
         Task<List<ApartmentViewModel>> GetAll();
         Task<ApartmentViewModel> GetByIdWithInclude(int idApartment);
+        Task<ApartmentViewModel> InsertNewApartment(ApartmentInputModel newApartment);
     }
 }
