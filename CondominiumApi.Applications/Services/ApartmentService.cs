@@ -4,6 +4,7 @@ using CondominiumApi.Applications.Dtos.ValueObjects;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Entities;
+using CondominiumApi.Domain.Exceptions;
 using CondominiumApi.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -78,25 +79,44 @@ namespace CondominiumApi.Applications.Services
 
         public async Task<ApartmentViewModel> InsertNewApartment(ApartmentInputModel newApartment)
         {
-            var apartment = new Apartment();
+            try
+            {
+                var apartment = new Apartment();
 
-            var idBlock = GetIdBlockOfApartment(newApartment.Block);
+                var idBlock = GetIdBlockOfApartment(newApartment.Block);
+                
+                if (idBlock == null)
+                    throw new NotFoundException("ERR-APSX01 O Bloco informado não foi encontrado");
 
-            if (idBlock == null)
-                return null;
+                apartment.BlockId = (int)idBlock;
+                apartment.Number = newApartment.Number;
+                apartment.Create_Date = DateTime.Now;
+                apartment.Last_Update_Date = DateTime.Now;
 
-            apartment.BlockId = (int)idBlock;
-            apartment.Number = newApartment.Number;
-            apartment.Create_Date = DateTime.Now;
-            apartment.Last_Update_Date = DateTime.Now;
+                apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
 
-            apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
+                await _apartmentRepository.InsertAsync(apartment);
 
-            await _apartmentRepository.InsertAsync(apartment);
+                var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
 
-            var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
-
-            return apartmentResult;
+                return apartmentResult;
+            }
+            catch(ValidationException validationException)
+            {
+                throw validationException;
+            }
+            catch (NotFoundException exception)
+            {
+                throw exception;
+            }
+            catch (DbException exception)
+            {
+                throw new Exception("ERR-APSX01 Não foi possível cadastrar o apartamento");
+            }
+            catch
+            {
+                throw new Exception("ERR-APSX03 Falha interna no servidor");
+            }
         }
 
         public async Task<ApartmentViewModel> ResetApartmentData(ApartmentInputModel newApartment)
@@ -156,22 +176,23 @@ namespace CondominiumApi.Applications.Services
         private async Task<Apartment> IncludeOwnerResidentDataAsync(Apartment apartment, string? OwnerCPF, string? ResidentCPF)
         {
             if (apartment.Owner != null && OwnerCPF == null)
-                throw new Exception("Invalido");
+                throw new ValidationException("O apartamento informado não tem proprietário");
 
             if (OwnerCPF != null)
             {
                 var owner = await _personRepository.GetPersonByCPF(OwnerCPF);
+                
                 if (owner == null)
-                    return null;
+                    throw new NotFoundException("O proprietário informado não foi encontrado");
 
                 apartment.Owner = new Person();
                 apartment.Owner = owner;
             }
 
             if (OwnerCPF == null && ResidentCPF != null)
-                return null;
+                throw new ValidationException("Para atribuir morador é obrigatório informar o proprietário!");
 
-            if(ResidentCPF == null)
+            if (ResidentCPF == null)
             {
                 apartment.Resident = null;
             }
@@ -179,12 +200,14 @@ namespace CondominiumApi.Applications.Services
             if (ResidentCPF != null)
             {
                 var resident = await _personRepository.GetPersonByCPF(ResidentCPF);
+                
                 if (resident == null)
-                    return null;
+                    throw new NotFoundException("O proprietário informado não foi encontrado");
 
                 apartment.Resident = new Person();
                 apartment.Resident = resident;
             }
+
             return apartment;
         }
     }

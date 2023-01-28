@@ -1,6 +1,7 @@
 ﻿using CondominiumApi.Applications.Dtos.InputModels;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
+using CondominiumApi.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumApi.Api.Controllers
@@ -56,8 +57,23 @@ namespace CondominiumApi.Api.Controllers
         [HttpPost("newApartment")]
         public async Task<IActionResult> InsertApartment([FromBody] ApartmentInputModel newApartment)
         {
-            var apartment = await _apartmentService.InsertNewApartment(newApartment);
-            return Ok(apartment);
+            try
+            {
+                var apartment = await _apartmentService.InsertNewApartment(newApartment);
+                return Ok(apartment);
+            }
+            catch(ValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
         }
 
         [HttpPut]
