@@ -1,4 +1,5 @@
-﻿using CondominiumApi.Applications.Dtos.ValueObjects;
+﻿using AutoMapper;
+using CondominiumApi.Applications.Dtos.ValueObjects;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Entities;
@@ -14,68 +15,32 @@ namespace CondominiumApi.Applications.Services
     public class ApartmentService : IApartmentService
     {
         private readonly IApartmentRepository _apartmentRepository;
-        public ApartmentService(IApartmentRepository apartmentRepository)
+        private readonly IMapper _mapper;
+        public ApartmentService(IApartmentRepository apartmentRepository, IMapper mapper)
         {
             _apartmentRepository = apartmentRepository;
+            _mapper = mapper;
         }
 
         public async Task<List<ApartmentViewModel>> GetAll()
         {
             var apartments = await _apartmentRepository.GetAllWithIncludeAsync();
-            var apartmentsResults = new List<ApartmentViewModel>();
+            var apartmentsResult = new List<ApartmentViewModel>();
 
             foreach (var apartment in apartments)
             {
-                var owner = new NameValueObject
-                {
-                    First_Name = apartment.Owner?.First_Name,
-                    Last_Name = apartment.Owner?.Last_Name,
-                };
-
-                var resident = new NameValueObject
-                {
-                    First_Name = apartment.Resident?.First_Name,
-                    Last_Name = apartment.Resident?.Last_Name,
-                };
-
-                var apartmentResult = new ApartmentViewModel
-                {
-                    Id = apartment.Id,
-                    Number = apartment.Number,
-                    Block = apartment.BlockOfApartment.Block,
-                    Owner = owner,
-                    Resident = resident,
-                };
-                apartmentsResults.Add(apartmentResult);
+                var apartmentViewModel = _mapper.Map<ApartmentViewModel>(apartment);
+                apartmentsResult.Add(apartmentViewModel);
             }
 
-            return apartmentsResults;
+            return apartmentsResult;
         }
 
         public async Task<ApartmentViewModel> GetByIdWithInclude(int idApartment)
         {
             var apartment = await _apartmentRepository.GetByIdWithIncludeAsync(idApartment);
-            
-            var owner = new NameValueObject
-            {
-                First_Name = apartment.Owner?.First_Name,
-                Last_Name = apartment.Owner?.Last_Name,
-            };
 
-            var resident = new NameValueObject
-            {
-                First_Name = apartment.Resident?.First_Name,
-                Last_Name = apartment.Resident?.Last_Name,
-            };
-
-            var apartmentResult = new ApartmentViewModel
-            {
-                Id = apartment.Id,
-                Number = apartment.Number,
-                Block = apartment.BlockOfApartment.Block,
-                Owner = owner,
-                Resident = resident,
-            };
+            var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
 
             return apartmentResult;
         }
