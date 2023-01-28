@@ -10,5 +10,6 @@ namespace CondominiumApi.Domain.Interfaces
     public interface IBlockRepository : IBaseRepository<BlockOfApartment>
     {
         Task<BlockOfApartment> GetByIdAsync(int id);
+        Task<BlockOfApartment> GetBlockOfApartment(string block);
     }
 }
