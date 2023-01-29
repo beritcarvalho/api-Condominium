@@ -92,7 +92,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder.HasIndex(vehicle => vehicle.Plate, "IX_Vehicle_Plate")
                 .IsUnique();
-
+             
             #endregion
         }
     }
