@@ -24,13 +24,13 @@ namespace CondominiumApi.Api.Controllers
                 var apartments = await _apartmentService.GetAll();
 
                 if (apartments == null)
-                    return NotFound("ERR-APCX01 Não foi encontrado nenhum apartamento");
+                    return NotFound(new ResultViewModel<ApartmentViewModel>("ERR-APCX01 Não foi encontrado nenhum apartamento"));
 
-                return Ok(apartments);
+                return Ok(new ResultViewModel<List<ApartmentViewModel>>(apartments));
             }
             catch(Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
         }
 
@@ -43,14 +43,14 @@ namespace CondominiumApi.Api.Controllers
 
                 if(apartment == null)
                 {
-                    return NotFound("ERR-APCX01 Apartamento não encontrado");
+                    return NotFound(new ResultViewModel<ApartmentViewModel>("ERR-APCX01 Apartamento não encontrado"));
                 }
 
-                return Ok(apartment);
+                return Ok(new ResultViewModel<ApartmentViewModel>(apartment));
             }
             catch(Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
         }
 
@@ -60,19 +60,19 @@ namespace CondominiumApi.Api.Controllers
             try
             {
                 var apartment = await _apartmentService.InsertNewApartment(newApartment);
-                return Ok(apartment);
+                return Created($"/newApartment/{apartment.Id}", new ResultViewModel<ApartmentViewModel>(apartment));
             }
             catch(ValidationException exception)
             {
-                return BadRequest(exception.Message);
+                return BadRequest(new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
             catch (NotFoundException exception)
             {
-                return NotFound(exception.Message);
+                return NotFound(new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
         }
 
@@ -83,19 +83,19 @@ namespace CondominiumApi.Api.Controllers
             {
                 var apartment = await _apartmentService.UpdateApartment(newApartment);
 
-                return Ok(apartment);
+                return Ok(new ResultViewModel<ApartmentViewModel>(apartment));
             }
             catch(NotFoundException exception)
             {
-                return NotFound(exception.Message);
+                return NotFound(new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
             catch (ValidationException exception)
             {
-                return BadRequest(exception.Message);
+                return BadRequest(new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
         }
 
@@ -106,19 +106,19 @@ namespace CondominiumApi.Api.Controllers
             {
                 var apartment = await _apartmentService.ResetApartmentData(newApartment);
 
-                return Ok(apartment);
+                return Ok(new ResultViewModel<ApartmentViewModel>(apartment));
             }
             catch (NotFoundException exception)
             {
-                return NotFound(exception.Message);
+                return NotFound(new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
             catch (ValidationException exception)
             {
-                return BadRequest(exception.Message);
+                return BadRequest(new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
             catch (Exception exception)
             {
-                return StatusCode(500, exception.Message);
+                return StatusCode(500, new ResultViewModel<ApartmentViewModel>(exception.Message));
             }
         }        
     }
