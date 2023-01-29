@@ -20,7 +20,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             builder
                 .Property(person => person.Id)
                 .ValueGeneratedOnAdd()
-                .HasComment(@"Chave Primária da tabela de pessoas ""Person""");
+                .HasComment("Chave Primária");
             #endregion
 
             #region Constrainsts
