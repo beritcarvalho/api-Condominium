@@ -22,7 +22,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .Property(apart => apart.Id)
                 .ValueGeneratedOnAdd()
                 .UseIdentityColumn()
-                .HasComment(@"Chave Primária da tabela de apartamento ""Apartment""");
+                .HasComment("Chave Primária");
 
             #endregion
 

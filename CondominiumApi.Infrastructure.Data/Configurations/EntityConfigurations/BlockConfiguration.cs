@@ -15,19 +15,20 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #region PrimaryKey
 
             builder
-                .HasKey(person => person.Id)
+                .HasKey(block => block.Id)
                 .HasName("PK_Block");
 
             builder
-                .Property(person => person.Id)
+                .Property(block => block.Id)
                 .ValueGeneratedOnAdd()
-                .HasComment(@"Chave Primária da tabela de blocos de apartamento ""Block""");
+                .UseIdentityColumn()
+                .HasComment("Chave Primária");
 
             #endregion
 
             #region Constrainsts
 
-            builder.Property(person => person.Block)
+            builder.Property(block => block.Block)
                 .IsRequired()
                 .HasColumnName("Block")
                 .HasColumnType("NVARCHAR")
@@ -39,7 +40,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #region Indexes
 
             builder
-                .HasIndex(person => person.Block, "IX_Block")
+                .HasIndex(block => block.Block, "IX_Block")
                 .IsUnique();
 
             #endregion
