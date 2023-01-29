@@ -10,10 +10,10 @@ namespace CondominiumApi.Api.Controllers
 {
     [ApiController]
     [Route("v1/people")]
-    public class PeopleController : ControllerBase
+    public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
-        public PeopleController(IPersonService personService)
+        public PersonController(IPersonService personService)
         {
             _personService = personService;
         }
