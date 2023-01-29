@@ -19,7 +19,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         {
             var entity = await Context
                 .Blocks
-                .Where(bloc => bloc.Name == block).FirstOrDefaultAsync();
+                .Where(bloc => bloc.Block_Name == block).FirstOrDefaultAsync();
 
             return entity;
         }

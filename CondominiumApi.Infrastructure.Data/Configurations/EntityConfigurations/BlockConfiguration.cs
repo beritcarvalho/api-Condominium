@@ -28,9 +28,9 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #region Constrainsts
 
-            builder.Property(block => block.Name)
+            builder.Property(block => block.Block_Name)
                 .IsRequired()
-                .HasColumnName("Block")
+                .HasColumnName("Block_Name")
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(2)
                 .HasComment("Bloco por Apartamento");
@@ -40,7 +40,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #region Indexes
 
             builder
-                .HasIndex(block => block.Name, "IX_Block")
+                .HasIndex(block => block.Block_Name, "IX_Block")
                 .IsUnique();
 
             #endregion
@@ -51,17 +51,17 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             new Block
             {
                 Id = 1,
-                Name = "A"
+                Block_Name = "A"
             },
             new Block
             {
                 Id = 2,
-                Name = "B"
+                Block_Name = "B"
             },
             new Block
             {
                 Id = 3,
-                Name = "C"
+                Block_Name = "C"
             });
 
             #endregion
