@@ -45,7 +45,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasMaxLength(7)
                 .HasComment("Placa do veículo");
 
-            builder.Property(apart => apart.ModelId)
+            builder.Property(apart => apart.VehicleModelId)
                 .IsRequired()
                 .HasComment("Chave da tabela de Model");
 
