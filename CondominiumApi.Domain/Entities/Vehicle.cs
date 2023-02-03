@@ -17,7 +17,6 @@ namespace CondominiumApi.Domain.Entities
         public bool Active { get; set; }
         public DateTime? Inactive_Date { get; set; }        
         public bool Handicap { get; set; }
-        public DateTime Last_Update_Date { get; set; }
-        
+        public DateTime Last_Update_Date { get; set; }        
     }
 }
