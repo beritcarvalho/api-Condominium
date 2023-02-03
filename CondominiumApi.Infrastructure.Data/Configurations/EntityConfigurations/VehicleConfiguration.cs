@@ -60,6 +60,12 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasDefaultValueSql("GETDATE()")
                 .HasComment("Data de cadastramento do veículo");
 
+            builder.Property(apart => apart.Vehicle_Type)
+                .IsRequired()
+                .HasColumnName("Vehicle_Type")
+                .HasColumnType("INT")
+                .HasComment("Indica tipo de veiculo. 1 == Automóvel, 2 == Motoclicleta, 3 == Caminhão");
+
             builder.Property(apart => apart.Active)
                 .IsRequired()
                 .HasColumnName("Active")
