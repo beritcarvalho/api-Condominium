@@ -25,26 +25,12 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
             #endregion
 
             #region ForeignKey
-            /*
+                       
             builder
-                .HasOne(apart => apart.Owner)
-                .WithOne(person => person.ApartmentOwner)
-                .HasForeignKey<Apartment>(apart => apart.OwnerId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .HasConstraintName("FK_Apartment_Owner_PersonId");
-
-            builder.HasOne(apart => apart.Resident)
-                .WithOne(person => person.ApartmentResident)
-                .HasForeignKey<Apartment>(apart => apart.ResidentId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .HasConstraintName("FK_Apartment_Resident_PersonId");
-
-            builder
-                .HasOne(apart => apart.BlockOfApartment)
-                .WithMany(block => block.Apartments)
-                .HasForeignKey(apart => apart.BlockId)
-                .OnDelete(DeleteBehavior.NoAction);*/
-
+                .HasOne(vehicle => vehicle.VehicleModel)
+                .WithMany(model => model.Vehicles)
+                .HasForeignKey(vehicle => vehicle.VehicleModelId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
 
@@ -67,10 +53,6 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .IsRequired()
                 .HasComment("Chave da tabela de Model");
 
-            builder.Property(apart => apart.ApartmentId)
-                .IsRequired()
-                .HasComment("Chave da tabela de Apartment");
-
             builder.Property(vehicle => vehicle.Create_Date)
                 .IsRequired()
                 .HasColumnName("Create_Date")
@@ -83,18 +65,6 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasColumnName("Vehicle_Type")
                 .HasColumnType("INT")
                 .HasComment("Indica tipo de veiculo. 1 == Automóvel, 2 == Motoclicleta, 3 == Caminhão");
-
-            builder.Property(apart => apart.Active)
-                .IsRequired()
-                .HasColumnName("Active")
-                .HasColumnType("BIT")
-                .HasDefaultValueSql("0")
-                .HasComment("Indica se o veículo está ativo");
-
-            builder.Property(vehicle => vehicle.Inactive_Date)
-                .HasColumnName("Inactive_Date")
-                .HasColumnType("DATETIME")
-                .HasComment("Data de desativação do veículo");
 
             builder.Property(apart => apart.Handicap)
                 .IsRequired()
