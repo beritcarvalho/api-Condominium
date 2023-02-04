@@ -14,7 +14,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
             builder.ToTable("Vehicle", "Condominium")
-                .HasComment("Tabela de vehicleros do condomínio");
+                .HasComment("Tabela de veiculos do condomínio");
 
             #region PrimaryKey
 
@@ -25,7 +25,25 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
             #endregion
 
             #region ForeignKey
+            /*
+            builder
+                .HasOne(apart => apart.Owner)
+                .WithOne(person => person.ApartmentOwner)
+                .HasForeignKey<Apartment>(apart => apart.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Apartment_Owner_PersonId");
 
+            builder.HasOne(apart => apart.Resident)
+                .WithOne(person => person.ApartmentResident)
+                .HasForeignKey<Apartment>(apart => apart.ResidentId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Apartment_Resident_PersonId");
+
+            builder
+                .HasOne(apart => apart.BlockOfApartment)
+                .WithMany(block => block.Apartments)
+                .HasForeignKey(apart => apart.BlockId)
+                .OnDelete(DeleteBehavior.NoAction);*/
 
 
             #endregion
