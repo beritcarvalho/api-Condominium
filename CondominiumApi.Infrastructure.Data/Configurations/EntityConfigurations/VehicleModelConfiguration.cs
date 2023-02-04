@@ -15,6 +15,62 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
         {
             builder.ToTable("VehicleModel", "Condominium")
             .HasComment("Tabela de modelos de veículo");
+
+            #region PrimaryKey
+
+            builder
+                .HasKey(vModel => vModel.Id)
+                .HasName("PK_Vehicle_Model");
+
+            builder
+                .Property(vModel => vModel.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityColumn()
+                .HasComment("Chave Primária");
+
+            #endregion
+
+            #region ForeignKey
+
+             builder
+                .HasOne(VehicleModel => VehicleModel.Brand)
+                .WithMany(brand => brand.Models)
+                .HasForeignKey(VehicleModel => VehicleModel.BrandId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            #endregion
+
+            #region Constrainsts
+
+            builder.Property(vModel => vModel.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityColumn()
+                .HasColumnType("INT")
+                .HasComment("Chave Primária");
+
+            builder.Property(vModel => vModel.Model_Name)
+                .IsRequired()
+                .HasColumnName("Model_Name")
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(30)
+                .HasComment("Modelo");
+
+            builder.Property(vModel => vModel.BrandId)
+                .IsRequired()
+                .HasColumnName("BrandId")
+                .HasColumnType("INT")
+                .HasComment("PK da tabela de marca");
+
+            #endregion
+
+            #region Indexes          
+
+            builder.HasIndex(vehicle => vehicle.Model_Name, "IX_Model_Name")
+                .IsUnique();
+
+            builder.HasIndex(vehicle => vehicle.BrandId, "IX_Brand_Id");
+
+            #endregion
         }
     }
 }
