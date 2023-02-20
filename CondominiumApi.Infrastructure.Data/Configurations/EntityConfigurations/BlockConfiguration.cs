@@ -5,9 +5,9 @@ using System.Security.Principal;
 
 namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
-    public class BlockConfiguration : IEntityTypeConfiguration<BlockOfApartment>
+    public class BlockConfiguration : IEntityTypeConfiguration<Block>
     {
-        public void Configure(EntityTypeBuilder<BlockOfApartment> builder)
+        public void Configure(EntityTypeBuilder<Block> builder)
         {                    
             builder.ToTable("Block", "Condominium")
                 .HasComment("Tabela de Bloco de apartamentos");
@@ -28,9 +28,9 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #region Constrainsts
 
-            builder.Property(block => block.Block)
+            builder.Property(block => block.Block_Name)
                 .IsRequired()
-                .HasColumnName("Block")
+                .HasColumnName("Block_Name")
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(2)
                 .HasComment("Bloco por Apartamento");
@@ -40,7 +40,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #region Indexes
 
             builder
-                .HasIndex(block => block.Block, "IX_Block")
+                .HasIndex(block => block.Block_Name, "IX_Block")
                 .IsUnique();
 
             #endregion
@@ -48,20 +48,20 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #region PopulationData
 
             builder.HasData(
-            new BlockOfApartment
+            new Block
             {
                 Id = 1,
-                Block = "A"
+                Block_Name = "A"
             },
-            new BlockOfApartment
+            new Block
             {
                 Id = 2,
-                Block = "B"
+                Block_Name = "B"
             },
-            new BlockOfApartment
+            new Block
             {
                 Id = 3,
-                Block = "C"
+                Block_Name = "C"
             });
 
             #endregion
