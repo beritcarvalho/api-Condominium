@@ -16,13 +16,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder
                 .HasKey(apart => apart.Id)
-                .HasName("PK_Apartment");
-
-            builder
-                .Property(apart => apart.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn()
-                .HasComment("Chave Primária");
+                .HasName("PK_Apartment");            
 
             #endregion
 
@@ -50,6 +44,12 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #endregion
 
             #region Constrainsts
+
+            builder
+                .Property(apart => apart.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityColumn()
+                .HasComment("Chave Primária");
 
             builder.Property(apart => apart.Number)
                 .IsRequired()
@@ -120,7 +120,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                     ResidentId = Guid.Parse("e69cb7b8-164c-41ed-a670-7b40480c3887")
                 });               
 
-            #endregion
+            #endregion*/
 
         }
     }

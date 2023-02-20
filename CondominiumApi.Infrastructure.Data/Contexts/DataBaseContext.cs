@@ -18,9 +18,12 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
         }
 
         public DbSet<Person> People { get; set; }
-        public DbSet<BlockOfApartment> Blocks{ get; set; }
         public DbSet<Apartment> Apartments { get; set; }
+        public DbSet<BlockOfApartment> Blocks{ get; set; }        
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleModel> VehiclesModels { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<ApartmentVehicle> ApartmentsVehicles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,6 +32,9 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
             builder.ApplyConfiguration(new ApartmentConfiguration());
             builder.ApplyConfiguration(new BlockConfiguration());
             builder.ApplyConfiguration(new VehicleConfiguration());
+            builder.ApplyConfiguration(new VehicleModelConfiguration());
+            builder.ApplyConfiguration(new BrandConfiguration());
+            builder.ApplyConfiguration(new ApartmentVehicleConfiguration());
         }
     }
 }

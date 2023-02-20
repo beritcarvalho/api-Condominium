@@ -20,13 +20,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder
                 .HasKey(vModel => vModel.Id)
-                .HasName("PK_Vehicle_Model");
-
-            builder
-                .Property(vModel => vModel.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn()
-                .HasComment("Chave Primária");
+                .HasName("PK_Vehicle_Model");          
 
             #endregion
 

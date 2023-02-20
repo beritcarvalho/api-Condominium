@@ -8,7 +8,7 @@ namespace CondominiumApi.Domain.Entities
 {
     public class Brand
     {
-        int Id { get; set; }
+        public int Id { get; set; }
         public string Brand_Name { get; set; }
 
         public ICollection<VehicleModel> Models { get; set; }

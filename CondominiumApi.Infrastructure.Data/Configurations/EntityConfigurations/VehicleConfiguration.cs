@@ -53,19 +53,6 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .IsRequired()
                 .HasComment("Chave da tabela de Model");
 
-            builder.Property(vehicle => vehicle.Create_Date)
-                .IsRequired()
-                .HasColumnName("Create_Date")
-                .HasColumnType("DATETIME")
-                .HasDefaultValueSql("GETDATE()")
-                .HasComment("Data de cadastramento do veículo");
-
-            builder.Property(apart => apart.Vehicle_Type)
-                .IsRequired()
-                .HasColumnName("Vehicle_Type")
-                .HasColumnType("INT")
-                .HasComment("Indica tipo de veiculo. 1 == Automóvel, 2 == Motoclicleta, 3 == Caminhão");
-
             builder.Property(apart => apart.Handicap)
                 .IsRequired()
                 .HasColumnName("Handicap")
@@ -73,12 +60,25 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasDefaultValueSql("0")
                 .HasComment("Indica se o veículo é adpatado para PcD");
 
+            builder.Property(apart => apart.Vehicle_Type)
+                .IsRequired()
+                .HasColumnName("Vehicle_Type")
+                .HasColumnType("INT")
+                .HasComment("Indica tipo de veiculo. 1 == Automóvel, 2 == Motoclicleta, 3 == Caminhão");
+
+            builder.Property(vehicle => vehicle.Create_Date)
+                .IsRequired()
+                .HasColumnName("Create_Date")
+                .HasColumnType("DATETIME")
+                .HasDefaultValueSql("GETDATE()")
+                .HasComment("Data de cadastramento do veículo");
+
             builder.Property(vehicle => vehicle.Last_Update_Date)
                 .IsRequired()
                 .HasColumnName("Last_Update_Date")
                 .HasColumnType("DATETIME")
                 .HasDefaultValueSql("GETDATE()")
-                .HasComment("Ultima atualização do cadastro do veículo");
+                .HasComment("Ultima atualização do cadastro do veículo");        
 
             #endregion
 

@@ -21,6 +21,6 @@ namespace CondominiumApi.Domain.Entities
         public DateTime Last_Update_Date { get; set; }
         
 
-        public ICollection<ApartmentVehicles> ApartmentVehicles { get; set; }
+        public ICollection<ApartmentVehicle> ApartmentsVehicles { get; set; }
     }
 }
