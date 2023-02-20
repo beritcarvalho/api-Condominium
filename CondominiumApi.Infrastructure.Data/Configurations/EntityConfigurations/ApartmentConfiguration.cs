@@ -120,7 +120,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                     ResidentId = Guid.Parse("e69cb7b8-164c-41ed-a670-7b40480c3887")
                 });               
 
-            #endregion*/
+            #endregion
 
         }
     }

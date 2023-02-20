@@ -35,10 +35,10 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder.Property(brand => brand.Brand_Name)
                 .IsRequired()
-                .HasColumnName("Plate")
+                .HasColumnName("Brand_Name")
                 .HasColumnType("NVARCHAR")
                 .HasMaxLength(30)
-                .HasComment("Placa do veículo");
+                .HasComment("Marca do veiculo");
 
             #endregion
 
@@ -46,6 +46,32 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder.HasIndex(brand => brand.Brand_Name, "IX_Brand_Name")
                 .IsUnique();
+
+            #endregion
+
+            #region PopulationData
+
+            builder.HasData(
+                new Brand
+                {
+                    Id = 1,
+                    Brand_Name = "Chevrolet"
+                },
+                new Brand
+                {
+                    Id = 2,
+                    Brand_Name = "Hyundai"
+                },
+                new Brand
+                {
+                    Id = 3,
+                    Brand_Name = "Volkswagen"
+                },
+                new Brand
+                {
+                    Id = 4,
+                    Brand_Name = "Honda"
+                });
 
             #endregion
         }

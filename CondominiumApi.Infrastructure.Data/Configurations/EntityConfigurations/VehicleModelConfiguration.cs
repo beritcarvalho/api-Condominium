@@ -65,6 +65,54 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
             builder.HasIndex(vehicle => vehicle.BrandId, "IX_Brand_Id");
 
             #endregion
+
+            #region PopulationData
+
+            builder.HasData(
+                new VehicleModel
+                {
+                    Id = 1,
+                    Model_Name = "Onix",
+                    BrandId = 1
+                },
+                new VehicleModel
+                {
+                    Id = 2,
+                    Model_Name = "Cruze",
+                    BrandId = 1
+                },
+                new VehicleModel
+                {
+                    Id = 3,
+                    Model_Name = "Celta",
+                    BrandId = 1
+                },
+                new VehicleModel
+                {
+                    Id = 4,
+                    Model_Name = "HB20",
+                    BrandId = 2
+                },
+                new VehicleModel
+                {
+                    Id = 5,
+                    Model_Name = "Fox",
+                    BrandId = 3
+                },
+                new VehicleModel
+                {
+                    Id = 6,
+                    Model_Name = "Gol",
+                    BrandId = 3
+                },
+                new VehicleModel
+                {
+                    Id = 7,
+                    Model_Name = "Civic",
+                    BrandId = 4
+                });
+
+            #endregion
         }
     }
 }

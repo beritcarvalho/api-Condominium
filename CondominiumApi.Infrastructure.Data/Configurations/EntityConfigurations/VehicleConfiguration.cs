@@ -1,4 +1,5 @@
 ﻿using CondominiumApi.Domain.Entities;
+using CondominiumApi.Domain.Enums.CondominiumApi.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -86,7 +87,37 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder.HasIndex(vehicle => vehicle.Plate, "IX_Vehicle_Plate")
                 .IsUnique();
-             
+
+            #endregion
+
+            #region PopulationData
+
+            builder.HasData(
+                new Vehicle
+                {
+                    Id = 1,
+                    Plate = "QNH3936",
+                    VehicleModelId = 1,
+                    Vehicle_Type = 1,
+                    Handicap = false
+                },
+                new Vehicle
+                {
+                    Id = 2,
+                    Plate = "ABC5566",
+                    VehicleModelId = 3,
+                    Vehicle_Type = 1,
+                    Handicap = false
+                },
+                new Vehicle
+                {
+                    Id = 3,
+                    Plate = "EGC4355",
+                    VehicleModelId = 5,
+                    Vehicle_Type = 1,
+                    Handicap = false
+                });
+
             #endregion
         }
     }
