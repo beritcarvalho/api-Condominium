@@ -80,6 +80,10 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             #region Indexes          
 
+            builder.HasIndex(apartVehi => apartVehi.ApartmentId, "IX_Apartment_Active")
+                .HasFilter("[Active] = 1")
+                .IsUnique();
+
             builder.HasIndex(apartVehi => new { apartVehi.VehicleId, apartVehi.ApartmentId }, "IX_Vehicle_Apartment")
                 .IsUnique();
 

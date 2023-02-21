@@ -4,6 +4,7 @@ using CondominiumApi.Infrastructure.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CondominiumApi.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230220232239_initialcreate")]
+    partial class initialcreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,9 +152,8 @@ namespace CondominiumApi.Infrastructure.Data.Migrations
 
                     b.HasIndex("ApartmentId");
 
-                    b.HasIndex(new[] { "VehicleId", "ApartmentId" }, "IX_Teste")
-                        .IsUnique()
-                        .HasFilter("[Active] = 1");
+                    b.HasIndex(new[] { "VehicleId", "ApartmentId" }, "IX_Vehicle_Apartment")
+                        .IsUnique();
 
                     b.ToTable("ApartmentsVehicles", "Condominium");
 
@@ -216,8 +217,8 @@ namespace CondominiumApi.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("NVARCHAR(30)")
-                        .HasColumnName("Brand_Name")
-                        .HasComment("Marca do veiculo");
+                        .HasColumnName("Plate")
+                        .HasComment("Placa do veículo");
 
                     b.HasKey("Id")
                         .HasName("PK_Brand");
