@@ -1,4 +1,5 @@
 ﻿using CondominiumApi.Domain.Entities;
+using CondominiumApi.Domain.Enums.CondominiumApi.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,7 +15,7 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
             builder.ToTable("Vehicle", "Condominium")
-                .HasComment("Tabela de vehicleros do condomínio");
+                .HasComment("Tabela de veiculos do condomínio");
 
             #region PrimaryKey
 
@@ -25,8 +26,12 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
             #endregion
 
             #region ForeignKey
-
-
+                       
+            builder
+                .HasOne(vehicle => vehicle.VehicleModel)
+                .WithMany(model => model.Vehicles)
+                .HasForeignKey(vehicle => vehicle.VehicleModelId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
 
@@ -45,32 +50,9 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasMaxLength(7)
                 .HasComment("Placa do veículo");
 
-            builder.Property(apart => apart.ModelId)
+            builder.Property(apart => apart.VehicleModelId)
                 .IsRequired()
                 .HasComment("Chave da tabela de Model");
-
-            builder.Property(apart => apart.ApartmentId)
-                .IsRequired()
-                .HasComment("Chave da tabela de Apartment");
-
-            builder.Property(vehicle => vehicle.Create_Date)
-                .IsRequired()
-                .HasColumnName("Create_Date")
-                .HasColumnType("DATETIME")
-                .HasDefaultValueSql("GETDATE()")
-                .HasComment("Data de cadastramento do veículo");
-
-            builder.Property(apart => apart.Active)
-                .IsRequired()
-                .HasColumnName("Active")
-                .HasColumnType("BIT")
-                .HasDefaultValueSql("0")
-                .HasComment("Indica se o veículo está ativo");
-
-            builder.Property(vehicle => vehicle.Inactive_Date)
-                .HasColumnName("Inactive_Date")
-                .HasColumnType("DATETIME")
-                .HasComment("Data de desativação do veículo");
 
             builder.Property(apart => apart.Handicap)
                 .IsRequired()
@@ -79,12 +61,25 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasDefaultValueSql("0")
                 .HasComment("Indica se o veículo é adpatado para PcD");
 
+            builder.Property(apart => apart.Vehicle_Type)
+                .IsRequired()
+                .HasColumnName("Vehicle_Type")
+                .HasColumnType("INT")
+                .HasComment("Indica tipo de veiculo. 1 == Automóvel, 2 == Motoclicleta, 3 == Caminhão");
+
+            builder.Property(vehicle => vehicle.Create_Date)
+                .IsRequired()
+                .HasColumnName("Create_Date")
+                .HasColumnType("DATETIME")
+                .HasDefaultValueSql("GETDATE()")
+                .HasComment("Data de cadastramento do veículo");
+
             builder.Property(vehicle => vehicle.Last_Update_Date)
                 .IsRequired()
                 .HasColumnName("Last_Update_Date")
                 .HasColumnType("DATETIME")
                 .HasDefaultValueSql("GETDATE()")
-                .HasComment("Ultima atualização do cadastro do veículo");
+                .HasComment("Ultima atualização do cadastro do veículo");        
 
             #endregion
 
@@ -92,7 +87,37 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
 
             builder.HasIndex(vehicle => vehicle.Plate, "IX_Vehicle_Plate")
                 .IsUnique();
-             
+
+            #endregion
+
+            #region PopulationData
+
+            builder.HasData(
+                new Vehicle
+                {
+                    Id = 1,
+                    Plate = "QNH3936",
+                    VehicleModelId = 1,
+                    Vehicle_Type = 1,
+                    Handicap = false
+                },
+                new Vehicle
+                {
+                    Id = 2,
+                    Plate = "ABC5566",
+                    VehicleModelId = 3,
+                    Vehicle_Type = 1,
+                    Handicap = false
+                },
+                new Vehicle
+                {
+                    Id = 3,
+                    Plate = "EGC4355",
+                    VehicleModelId = 5,
+                    Vehicle_Type = 1,
+                    Handicap = false
+                });
+
             #endregion
         }
     }

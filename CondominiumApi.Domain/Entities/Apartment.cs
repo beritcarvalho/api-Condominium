@@ -22,5 +22,7 @@ namespace CondominiumApi.Domain.Entities
 
         public DateTime Create_Date { get; set; }
         public DateTime Last_Update_Date { get; set; }
+                
+        public ICollection<ApartmentVehicle> ApartmentsVehicles { get; set; }
     }
 }
