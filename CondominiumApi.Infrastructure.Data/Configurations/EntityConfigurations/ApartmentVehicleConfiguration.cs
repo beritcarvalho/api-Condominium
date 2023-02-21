@@ -84,6 +84,10 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasFilter("[Active] = 1")
                 .IsUnique();
 
+            builder.HasIndex(apartVehi => apartVehi.VehicleId, "IX_Vehicle_Active")
+                .HasFilter("[Active] = 1")
+                .IsUnique();
+
             builder.HasIndex(apartVehi => new { apartVehi.VehicleId, apartVehi.ApartmentId }, "IX_Vehicle_Apartment")
                 .IsUnique();
 
