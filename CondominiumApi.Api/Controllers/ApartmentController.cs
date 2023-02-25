@@ -54,7 +54,7 @@ namespace CondominiumApi.Api.Controllers
             }
         }
 
-        [HttpPost("newApartment")]
+        [HttpPost]
         public async Task<IActionResult> InsertApartment([FromBody] ApartmentInputModel newApartment)
         {
             try
@@ -99,7 +99,7 @@ namespace CondominiumApi.Api.Controllers
             }
         }
 
-        [HttpPut("ResetData")]
+        [HttpPut("reset")]
         public async Task<IActionResult> ResetApartmentData([FromBody] ApartmentInputModel newApartment)
         {
             try

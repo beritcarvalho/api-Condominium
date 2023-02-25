@@ -47,7 +47,7 @@ namespace CondominiumApi.Api.Controllers
             return Ok(new ResultViewModel<PersonViewModel>(person));
         }
 
-        [HttpPost("/newperson")]
+        [HttpPost]
         public async Task<IActionResult> RegisterNewPerson([FromBody] PersonInputModel newPerson)
         {
             try
@@ -95,15 +95,6 @@ namespace CondominiumApi.Api.Controllers
             {
                 return StatusCode(500, new ResultViewModel<List<PersonViewModel>>(e.Message));
             }
-        }
-
-
-        [HttpGet("/guid")]
-        public async Task<IActionResult> GetNewGuid()
-        {
-            var guid = Guid.NewGuid();   
-
-            return Ok(new ResultViewModel<Guid>(guid));
         }
     }
 }
