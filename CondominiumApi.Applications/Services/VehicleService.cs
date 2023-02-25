@@ -1,4 +1,5 @@
-﻿using CondominiumApi.Applications.Dtos.ViewModels;
+﻿using AutoMapper;
+using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Enums.CondominiumApi.Domain.Enums;
 using CondominiumApi.Domain.Interfaces;
@@ -12,10 +13,12 @@ namespace CondominiumApi.Applications.Services
 {
     public class VehicleService : IVehicleService
     {
+        private readonly IMapper _mapper;
         private readonly IVehicleRepository _vehicleRepository;
 
-        public VehicleService(IVehicleRepository vehicleRepository)
+        public VehicleService(IMapper mapper, IVehicleRepository vehicleRepository)
         {
+            _mapper = mapper;
             _vehicleRepository = vehicleRepository;
         }
 
@@ -27,17 +30,7 @@ namespace CondominiumApi.Applications.Services
 
             foreach(var vehicle in vehicles) 
             {
-                vehiclesResults.Add(new VehicleViewModel
-                {
-                    Id = vehicle.Id,
-                    Plate = vehicle.Plate,
-                    Model = vehicle.VehicleModel.Model_Name,
-                    Brand = vehicle.VehicleModel.Brand.Brand_Name,
-                    Vehicle_Type = ((EVehicleType)vehicle.Vehicle_Type).ToString(),
-                    Handicap = vehicle.Handicap,
-                    Create_Date = vehicle.Create_Date,
-                    Last_Update_Date = vehicle.Last_Update_Date
-                });
+                vehiclesResults.Add(_mapper.Map<VehicleViewModel>(vehicle));
             }
 
             return vehiclesResults;

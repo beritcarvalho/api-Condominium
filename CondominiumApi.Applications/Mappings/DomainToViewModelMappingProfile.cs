@@ -3,6 +3,7 @@ using CondominiumApi.Applications.Dtos.InputModels;
 using CondominiumApi.Applications.Dtos.ValueObjects;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Domain.Entities;
+using CondominiumApi.Domain.Enums.CondominiumApi.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace CondominiumApi.Applications.Mappings
     {
         public DomainToViewModelMappingProfile()
         {
-            #region Mapeamento Person
+            #region Person
             
             CreateMap<Person, PersonViewModel>();      
             CreateMap<PersonInputModel, Person>();
@@ -23,7 +24,7 @@ namespace CondominiumApi.Applications.Mappings
 
             #endregion
 
-            #region Mapeamento Apartment
+            #region Apartment
 
             CreateMap<Apartment, ApartmentViewModel>()
                 .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.BlockOfApartment.Block_Name))
@@ -33,6 +34,18 @@ namespace CondominiumApi.Applications.Mappings
                     src => new NameValueObject { First_Name = src.Resident.First_Name, Last_Name = src.Resident.Last_Name }));
 
             #endregion
+
+
+            #region Vehicle
+
+            CreateMap<Vehicle, VehicleViewModel>()
+                .ForMember(dest => dest.Plate, opt => opt.MapFrom(src => src.Plate))
+                .ForMember(dest => dest.Model, opt => opt.MapFrom(src => src.VehicleModel.Model_Name))
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.VehicleModel.Brand.Brand_Name))
+                .ForMember(dest => dest.Vehicle_Type, opt => opt.MapFrom(src => ((EVehicleType)src.Vehicle_Type).ToString()));
+
+            #endregion
+
         }
 
     }
