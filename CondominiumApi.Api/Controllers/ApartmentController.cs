@@ -39,7 +39,7 @@ namespace CondominiumApi.Api.Controllers
         {
             try
             {
-                var apartment = await _apartmentService.GetByIdWithInclude(id);
+                var apartment = await _apartmentService.GetByIdWithInclusions(id);
 
                 if(apartment == null)
                 {

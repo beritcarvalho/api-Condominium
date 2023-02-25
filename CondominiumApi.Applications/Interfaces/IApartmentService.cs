@@ -11,7 +11,7 @@ namespace CondominiumApi.Applications.Interfaces
     public interface IApartmentService
     {
         Task<List<ApartmentViewModel>> GetAll();
-        Task<ApartmentViewModel> GetByIdWithInclude(int idApartment);
+        Task<ApartmentViewModel> GetByIdWithInclusions(int idApartment);
         Task<ApartmentViewModel> InsertNewApartment(ApartmentInputModel newApartment);
         Task<ApartmentViewModel> UpdateApartment(ApartmentInputModel newApartment);
         Task<ApartmentViewModel> ResetApartmentData(ApartmentInputModel newApartment);

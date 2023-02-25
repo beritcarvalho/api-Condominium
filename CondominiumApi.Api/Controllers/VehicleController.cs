@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CondominiumApi.Applications.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumApi.Api.Controllers
 {
@@ -6,10 +7,18 @@ namespace CondominiumApi.Api.Controllers
     [Route("v1/vehicles")]
     public class VehicleController : ControllerBase
     {
+        private readonly IVehicleService _vehicleService;
+
+        public VehicleController(IVehicleService vehicleService)
+        {
+            _vehicleService = vehicleService;
+        }
+
         [HttpGet]
         public async Task<IActionResult> TestesRetornos()
         {
-            return Ok();
+            var list = await _vehicleService.GetAll();
+            return Ok(list);
         }
     }
 }

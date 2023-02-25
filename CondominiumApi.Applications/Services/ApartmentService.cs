@@ -38,7 +38,7 @@ namespace CondominiumApi.Applications.Services
         {
             try
             {
-                var apartments = await _apartmentRepository.GetAllWithInclude();
+                var apartments = await _apartmentRepository.GetAllWithInclusions();
 
                 if (apartments == null)
                     return null;
@@ -59,11 +59,11 @@ namespace CondominiumApi.Applications.Services
             }
         }
 
-        public async Task<ApartmentViewModel> GetByIdWithInclude(int idApartment)
+        public async Task<ApartmentViewModel> GetByIdWithInclusions(int idApartment)
         {
             try
             {
-                var apartment = await _apartmentRepository.GetByIdWithInclude(idApartment);
+                var apartment = await _apartmentRepository.GetByIdWithInclusions(idApartment);
 
                 if (apartment == null)
                     return null;
@@ -129,7 +129,7 @@ namespace CondominiumApi.Applications.Services
                 if (idBlock == null)
                     throw new NotFoundException("ERR-APSX02 O Bloco informado não foi encontrado");
 
-                var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
+                var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclusions(newApartment.Number, (int)idBlock);
 
                 if (apartment == null)
                     throw new NotFoundException("ERR-APSX01 Apartamento não encontrado");
@@ -169,7 +169,7 @@ namespace CondominiumApi.Applications.Services
                 if (idBlock == null)
                     throw new NotFoundException("ERR-APSX03 O Bloco informado não foi encontrado");
 
-                var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclude(newApartment.Number, (int)idBlock);
+                var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclusions(newApartment.Number, (int)idBlock);
 
                 if (apartment == null)
                     throw new NotFoundException("ERR-APSX02 Apartamento não encontrado");

@@ -16,7 +16,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         {
         }
 
-        public async Task<Apartment> GetByIdWithInclude(int id)
+        public async Task<Apartment> GetByIdWithInclusions(int id)
         {
             var apartment = await Context
                 .Apartments
@@ -29,7 +29,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
             return apartment;
         }
 
-        public async Task<List<Apartment>> GetAllWithInclude()
+        public async Task<List<Apartment>> GetAllWithInclusions()
         {
             var apartment = await Context
                 .Apartments             
@@ -42,7 +42,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
             return apartment;
         }
 
-        public async Task<Apartment> GetByNumberAndBlockWithInclude(int number, int idblock)
+        public async Task<Apartment> GetByNumberAndBlockWithInclusions(int number, int idblock)
         {
             var apartment = await Context
                 .Apartments

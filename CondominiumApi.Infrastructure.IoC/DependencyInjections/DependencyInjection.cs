@@ -29,6 +29,7 @@ namespace CondominiumApi.Infrastructure.IoC.DependencyInjections
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IApartmentService, ApartmentService>();
+            services.AddScoped<IVehicleService, VehicleService>();
         }
 
         private static void AddRepository(IServiceCollection services)
@@ -36,6 +37,7 @@ namespace CondominiumApi.Infrastructure.IoC.DependencyInjections
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
             services.AddScoped<IBlockRepository, BlockRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
         }     
     }
 }
