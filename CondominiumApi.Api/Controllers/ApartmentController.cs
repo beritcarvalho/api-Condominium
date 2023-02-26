@@ -23,7 +23,7 @@ namespace CondominiumApi.Api.Controllers
             {
                 var apartments = await _apartmentService.GetAll();
 
-                if (apartments == null)
+                if (apartments is null)
                     return NotFound(new ResultViewModel<ApartmentViewModel>("ERR-APCX01 Não foi encontrado nenhum apartamento"));
 
                 return Ok(new ResultViewModel<List<ApartmentViewModel>>(apartments));
@@ -41,7 +41,7 @@ namespace CondominiumApi.Api.Controllers
             {
                 var apartment = await _apartmentService.GetByIdWithInclusions(id);
 
-                if(apartment == null)
+                if(apartment is null)
                 {
                     return NotFound(new ResultViewModel<ApartmentViewModel>("ERR-APCX01 Apartamento não encontrado"));
                 }

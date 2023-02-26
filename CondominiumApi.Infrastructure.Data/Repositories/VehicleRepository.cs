@@ -35,7 +35,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         {
             return await Context.Vehicles
                 .Where(vehicle => vehicle.Plate == plate)
-                .Include(brad => brad.VehicleModel.Brand)
+                .Include(vehicle => vehicle.VehicleModel.Brand)
                 .FirstAsync();
         }
     }

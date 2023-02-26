@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace CondominiumApi.Infrastructure.Data.Repositories
 {
-    public class BlockRepository : BaseRepository<Block>, IBlockRepository
+    public class BlockRepository : BaseRepository<BlockOfApartment>, IBlockRepository
     {
         public BlockRepository(DataBaseContext context) : base(context)
         {
         }
-        public async Task<Block> GetBlockOfApartment(string block)
+        public async Task<BlockOfApartment> GetBlockOfApartment(string block)
         {
             var entity = await Context
                 .Blocks

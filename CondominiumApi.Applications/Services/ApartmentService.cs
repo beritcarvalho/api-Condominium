@@ -40,7 +40,7 @@ namespace CondominiumApi.Applications.Services
             {
                 var apartments = await _apartmentRepository.GetAllWithInclusions();
 
-                if (apartments == null)
+                if (apartments is null)
                     return null;
 
                 var apartmentsResult = new List<ApartmentViewModel>();
@@ -65,7 +65,7 @@ namespace CondominiumApi.Applications.Services
             {
                 var apartment = await _apartmentRepository.GetByIdWithInclusions(idApartment);
 
-                if (apartment == null)
+                if (apartment is null)
                     return null;
 
                 var apartmentResult = _mapper.Map<ApartmentViewModel>(apartment);
@@ -86,7 +86,7 @@ namespace CondominiumApi.Applications.Services
 
                 var idBlock = GetIdBlockOfApartment(newApartment.Block);
                 
-                if (idBlock == null)
+                if (idBlock is null)
                     throw new NotFoundException("ERR-APSX01 O Bloco informado não foi encontrado");
 
                 apartment.BlockId = (int)idBlock;
@@ -126,12 +126,12 @@ namespace CondominiumApi.Applications.Services
             {
                 var idBlock = GetIdBlockOfApartment(newApartment.Block);
 
-                if (idBlock == null)
+                if (idBlock is null)
                     throw new NotFoundException("ERR-APSX02 O Bloco informado não foi encontrado");
 
                 var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclusions(newApartment.Number, (int)idBlock);
 
-                if (apartment == null)
+                if (apartment is null)
                     throw new NotFoundException("ERR-APSX01 Apartamento não encontrado");
 
                 apartment = apartment = await IncludeOwnerResidentDataAsync(apartment, newApartment.OwnerCPF, newApartment.ResidentCPF);
@@ -166,12 +166,12 @@ namespace CondominiumApi.Applications.Services
             {
                 var idBlock = GetIdBlockOfApartment(newApartment.Block);
 
-                if (idBlock == null)
+                if (idBlock is null)
                     throw new NotFoundException("ERR-APSX03 O Bloco informado não foi encontrado");
 
                 var apartment = await _apartmentRepository.GetByNumberAndBlockWithInclusions(newApartment.Number, (int)idBlock);
 
-                if (apartment == null)
+                if (apartment is null)
                     throw new NotFoundException("ERR-APSX02 Apartamento não encontrado");
 
                 apartment.Owner = null;
@@ -214,24 +214,24 @@ namespace CondominiumApi.Applications.Services
 
         private async Task<Apartment> IncludeOwnerResidentDataAsync(Apartment apartment, string? OwnerCPF, string? ResidentCPF)
         {
-            if (apartment.Owner != null && OwnerCPF == null)
+            if (apartment.Owner != null && OwnerCPF is null)
                 throw new ValidationException("O apartamento informado não tem proprietário");
 
             if (OwnerCPF != null)
             {
                 var owner = await _personRepository.GetPersonByCPF(OwnerCPF);
                 
-                if (owner == null)
+                if (owner is null)
                     throw new NotFoundException("O proprietário informado não foi encontrado");
 
                 apartment.Owner = new Person();
                 apartment.Owner = owner;
             }
 
-            if (OwnerCPF == null && ResidentCPF != null)
+            if (OwnerCPF is null && ResidentCPF != null)
                 throw new ValidationException("Para atribuir morador é obrigatório informar o proprietário!");
 
-            if (ResidentCPF == null)
+            if (ResidentCPF is null)
             {
                 apartment.Resident = null;
             }
@@ -240,7 +240,7 @@ namespace CondominiumApi.Applications.Services
             {
                 var resident = await _personRepository.GetPersonByCPF(ResidentCPF);
                 
-                if (resident == null)
+                if (resident is null)
                     throw new NotFoundException("O proprietário informado não foi encontrado");
 
                 apartment.Resident = new Person();

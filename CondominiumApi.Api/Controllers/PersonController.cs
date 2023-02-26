@@ -25,7 +25,7 @@ namespace CondominiumApi.Api.Controllers
             {
                 var people = await _personService.GetAll();
 
-                if (people == null)
+                if (people is null)
                     return NotFound(new ResultViewModel<IList<PersonViewModel>>("Nenhum cadastro encontrado"));
                 
                 return Ok(new ResultViewModel<IList<PersonViewModel>>(people));
@@ -41,7 +41,7 @@ namespace CondominiumApi.Api.Controllers
         {
             var person = await _personService.GetById(id);
 
-            if (person == null)
+            if (person is null)
                 return NotFound(new ResultViewModel<PersonViewModel>("Cadastro não encontrado"));
 
             return Ok(new ResultViewModel<PersonViewModel>(person));
@@ -68,7 +68,7 @@ namespace CondominiumApi.Api.Controllers
             {
                 var person = await _personService.UpdateAccount(inputPerson);
 
-                if (person == null)
+                if (person is null)
                     return NotFound(new ResultViewModel<List<PersonViewModel>>("ERR-PCX01 Cadastro não encontrado"));
 
                 return Ok(new ResultViewModel<PersonViewModel>(person)); ;
@@ -86,7 +86,7 @@ namespace CondominiumApi.Api.Controllers
             {
                 var person = await _personService.RemoveById(id);
 
-                if (person == null)
+                if (person is null)
                     return NotFound(new ResultViewModel<List<PersonViewModel>>("ERR-PCX02 Cadastro não encontrado"));
 
                 return Ok(new ResultViewModel<PersonViewModel>(person));

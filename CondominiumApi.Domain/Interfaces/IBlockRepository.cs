@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CondominiumApi.Domain.Interfaces
 {
-    public interface IBlockRepository : IBaseRepository<Block>
+    public interface IBlockRepository : IBaseRepository<BlockOfApartment>
     {
-        Task<Block> GetByIdAsync(int id);
-        Task<Block> GetBlockOfApartment(string block);
+        Task<BlockOfApartment> GetByIdAsync(int id);
+        Task<BlockOfApartment> GetBlockOfApartment(string block);
     }
 }

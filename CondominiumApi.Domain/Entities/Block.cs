@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CondominiumApi.Domain.Entities
 {
-    public class Block
+    public class BlockOfApartment
     {
         public int Id { get; set; }
         public string Block_Name { get; set; }

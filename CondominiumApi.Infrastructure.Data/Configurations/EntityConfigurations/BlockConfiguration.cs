@@ -5,9 +5,9 @@ using System.Security.Principal;
 
 namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
 {
-    public class BlockConfiguration : IEntityTypeConfiguration<Block>
+    public class BlockConfiguration : IEntityTypeConfiguration<BlockOfApartment>
     {
-        public void Configure(EntityTypeBuilder<Block> builder)
+        public void Configure(EntityTypeBuilder<BlockOfApartment> builder)
         {                    
             builder.ToTable("Block", "Condominium")
                 .HasComment("Tabela de Bloco de apartamentos");
@@ -48,17 +48,17 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
             #region PopulationData
 
             builder.HasData(
-            new Block
+            new BlockOfApartment
             {
                 Id = 1,
                 Block_Name = "A"
             },
-            new Block
+            new BlockOfApartment
             {
                 Id = 2,
                 Block_Name = "B"
             },
-            new Block
+            new BlockOfApartment
             {
                 Id = 3,
                 Block_Name = "C"

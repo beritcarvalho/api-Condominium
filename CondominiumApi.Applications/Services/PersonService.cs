@@ -77,7 +77,7 @@ namespace CondominiumApi.Applications.Services
             {
                 var person = await _personRepository.GetByIdAsync(id);
 
-                if (person == null)
+                if (person is null)
                     return null;
 
                 var resultPerson = _mapper.Map<PersonViewModel>(person);
@@ -97,7 +97,7 @@ namespace CondominiumApi.Applications.Services
             {
                 var person = await _personRepository.GetByIdAsync(id);
 
-                if (person == null)
+                if (person is null)
                     return null;
 
                 await _personRepository.RemoveAsync(person);
@@ -119,7 +119,7 @@ namespace CondominiumApi.Applications.Services
             {
                 var person = await _personRepository.GetByIdAsync(input.Id);
 
-                if (person == null)
+                if (person is null)
                     return null;
 
                 _mapper.Map(input, person);

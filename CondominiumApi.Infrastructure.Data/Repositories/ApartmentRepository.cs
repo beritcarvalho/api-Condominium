@@ -21,7 +21,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
             var apartment = await Context
                 .Apartments
                 .Where(apart => apart.Id == id)
-                .Include(bloc => bloc.BlockOfApartment)
+                .Include(bloc => bloc.Block)
                 .Include(bloc => bloc.Owner)
                 .Include(bloc => bloc.Resident)
                 .FirstOrDefaultAsync();
@@ -33,7 +33,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
         {
             var apartment = await Context
                 .Apartments             
-                .Include(bloc => bloc.BlockOfApartment)
+                .Include(bloc => bloc.Block)
                 .Include(bloc => bloc.Owner)
                 .Include(bloc => bloc.Resident)
                 .AsNoTracking()   
@@ -47,7 +47,7 @@ namespace CondominiumApi.Infrastructure.Data.Repositories
             var apartment = await Context
                 .Apartments
                 .Where(apart => apart.Number == number && apart.BlockId == idblock)
-                .Include(bloc => bloc.BlockOfApartment)
+                .Include(bloc => bloc.Block)
                 .Include(bloc => bloc.Owner)
                 .Include(bloc => bloc.Resident)
                 .FirstOrDefaultAsync();

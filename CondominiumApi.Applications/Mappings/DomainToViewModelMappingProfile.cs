@@ -27,7 +27,7 @@ namespace CondominiumApi.Applications.Mappings
             #region Apartment
 
             CreateMap<Apartment, ApartmentViewModel>()
-                .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.BlockOfApartment.Block_Name))
+                .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block.Block_Name))
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(
                     src => new NameValueObject { First_Name = src.Owner.First_Name, Last_Name = src.Owner.Last_Name }))
                 .ForMember(dest => dest.Resident, opt => opt.MapFrom(

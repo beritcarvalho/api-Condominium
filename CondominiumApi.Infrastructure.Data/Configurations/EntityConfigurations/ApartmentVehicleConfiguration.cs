@@ -92,6 +92,26 @@ namespace CondominiumApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .IsUnique();
 
             #endregion
+
+
+            #region PopulationData
+
+            builder.HasData(
+                new ApartmentVehicle
+                {
+                    Id = 1,
+                    ApartmentId = 1,
+                    VehicleId = 1,
+                    Active = true
+                }, new ApartmentVehicle
+                {
+                    Id = 2,
+                    ApartmentId = 2,
+                    VehicleId = 2,
+                    Active = false
+                });
+
+            #endregion
         }
     }
 }

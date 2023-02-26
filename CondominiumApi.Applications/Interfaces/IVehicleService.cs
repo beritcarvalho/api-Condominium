@@ -10,5 +10,6 @@ namespace CondominiumApi.Applications.Interfaces
     public interface IVehicleService
     {
         Task<List<VehicleViewModel>> GetAll();
+        Task<VehicleViewModel> GetVehicle(decimal? id, string? plate);
     }
 }

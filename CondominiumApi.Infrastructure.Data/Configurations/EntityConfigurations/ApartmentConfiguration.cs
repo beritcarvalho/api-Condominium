@@ -36,7 +36,7 @@ namespace UserApi.Infrastructure.Data.Configurations.EntityConfigurations
                 .HasConstraintName("FK_Apartment_Resident_PersonId");
 
             builder
-                .HasOne(apart => apart.BlockOfApartment)
+                .HasOne(apart => apart.Block)
                 .WithMany(block => block.Apartments)
                 .HasForeignKey(apart => apart.BlockId)
                 .OnDelete(DeleteBehavior.NoAction);

@@ -15,7 +15,5 @@ namespace CondominiumApi.Applications.Dtos.ViewModels
         public string Brand { get; set; }
         public string Vehicle_Type { get; set; }
         public bool Handicap { get; set; }
-        public DateTime Create_Date { get; set; }
-        public DateTime Last_Update_Date { get; set; }
     }
 }

@@ -12,6 +12,10 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
 {
     public class DataBaseContext : DbContext
     {
+        public DataBaseContext()
+        {
+        }
+
         public DataBaseContext(DbContextOptions<DataBaseContext> options)
             : base(options)
         {
@@ -19,7 +23,7 @@ namespace CondominiumApi.Infrastructure.Data.Contexts
 
         public DbSet<Person> People { get; set; }
         public DbSet<Apartment> Apartments { get; set; }
-        public DbSet<Block> Blocks{ get; set; }        
+        public DbSet<BlockOfApartment> Blocks{ get; set; }        
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleModel> VehiclesModels { get; set; }
         public DbSet<Brand> Brands { get; set; }
