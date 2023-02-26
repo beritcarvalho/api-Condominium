@@ -28,7 +28,7 @@ namespace CondominiumApi.Applications.Services
             _apartmentRepository = apartmentRepository;
         }
 
-        public async Task<List<VehicleViewModel>> GetAll()
+        public async Task<List<VehicleViewModel>> GetAllVehicles()
         {
             var vehicles = await _vehicleRepository.GetAllWithInclusions();
 
@@ -84,6 +84,7 @@ namespace CondominiumApi.Applications.Services
             return _mapper.Map<VehicleViewModel>(vehicle);
         }
 
+
         public async Task<VehicleViewModel> GetVehicleAparment(decimal? id, string? plate)
         {
             Vehicle? vehicle = null;
@@ -111,6 +112,24 @@ namespace CondominiumApi.Applications.Services
             return result;
         }
 
+        public Task<List<VehicleModelViewModel>> GetAllModels()
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<VehicleModelViewModel> GetModel(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<VehicleModelViewModel> IVehicleService.AddModel(VehicleModelInputModel newModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<VehicleModelViewModel> IVehicleService.UpdateModel(VehicleModelInputModel currentModeleData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

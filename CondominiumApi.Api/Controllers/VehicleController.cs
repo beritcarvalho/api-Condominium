@@ -18,7 +18,7 @@ namespace CondominiumApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllVehicles()
         {
-            var list = await _vehicleService.GetAll();
+            var list = await _vehicleService.GetAllVehicles();
             return Ok(list);
         }
 
@@ -48,6 +48,13 @@ namespace CondominiumApi.Api.Controllers
         {
             var vehicle = await _vehicleService.UpdateVehicle(currentVehicleData);
             return Ok(vehicle);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllModels()
+        {
+            var list = await _vehicleService.GetAllVehicles();
+            return Ok(list);
         }
     }
 }

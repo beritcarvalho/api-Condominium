@@ -10,9 +10,13 @@ namespace CondominiumApi.Applications.Interfaces
 {
     public interface IVehicleService
     {
-        Task<List<VehicleViewModel>> GetAll();
+        Task<List<VehicleViewModel>> GetAllVehicles();
         Task<VehicleViewModel> GetVehicle(decimal? id, string? plate);
         Task<VehicleViewModel> AddVehicle(VehicleInputModel newVehicle);
         Task<VehicleViewModel> UpdateVehicle(VehicleInputModel currentVehicleData);
+        Task<List<VehicleModelViewModel>> GetAllModels();
+        Task<VehicleModelViewModel> GetModel(int id);
+        Task<VehicleModelViewModel> AddModel(VehicleModelInputModel newModel);
+        Task<VehicleModelViewModel> UpdateModel(VehicleModelInputModel currentModeleData);
     }
 }
