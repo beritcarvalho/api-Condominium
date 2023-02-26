@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CondominiumApi.Applications.Dtos.InputModels;
 using CondominiumApi.Applications.Dtos.ViewModels;
 using CondominiumApi.Applications.Interfaces;
 using CondominiumApi.Domain.Entities;
@@ -61,6 +62,28 @@ namespace CondominiumApi.Applications.Services
             return result;
         }
 
+        public async Task<VehicleViewModel> AddVehicle(VehicleInputModel newVehicle)
+        {
+            var vehicle = _mapper.Map<Vehicle>(newVehicle);
+            vehicle.Create_Date = DateTime.Now;
+            vehicle.Last_Update_Date = DateTime.Now;
+            await _vehicleRepository.InsertAsync(vehicle);
+            return _mapper.Map<VehicleViewModel>(vehicle);        
+        }
+
+        public async Task<VehicleViewModel> UpdateVehicle(VehicleInputModel currentVehicleData)        
+        {
+            var vehicle = await _vehicleRepository.GetByIdAsync(currentVehicleData.Id);
+
+            if (vehicle is null)
+                return null;
+            
+            vehicle = _mapper.Map(currentVehicleData, vehicle);
+            vehicle.Last_Update_Date = DateTime.Now;
+            await _vehicleRepository.UpdateAsync(vehicle);
+            return _mapper.Map<VehicleViewModel>(vehicle);
+        }
+
         public async Task<VehicleViewModel> GetVehicleAparment(decimal? id, string? plate)
         {
             Vehicle? vehicle = null;
@@ -87,5 +110,7 @@ namespace CondominiumApi.Applications.Services
 
             return result;
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using CondominiumApi.Applications.Interfaces;
+﻿using CondominiumApi.Applications.Dtos.InputModels;
+using CondominiumApi.Applications.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CondominiumApi.Api.Controllers
@@ -32,6 +33,20 @@ namespace CondominiumApi.Api.Controllers
         public async Task<IActionResult> GetVehicle([FromRoute] string plate)
         {
             var vehicle = await _vehicleService.GetVehicle(null, plate);
+            return Ok(vehicle);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewVehicle([FromBody] VehicleInputModel newVehicle)
+        {
+            var vehicle = await _vehicleService.AddVehicle(newVehicle);
+            return Ok(vehicle);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateVehicle([FromBody] VehicleInputModel currentVehicleData)
+        {
+            var vehicle = await _vehicleService.UpdateVehicle(currentVehicleData);
             return Ok(vehicle);
         }
     }

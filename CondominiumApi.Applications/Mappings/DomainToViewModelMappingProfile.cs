@@ -35,7 +35,6 @@ namespace CondominiumApi.Applications.Mappings
 
             #endregion
 
-
             #region Vehicle
 
             CreateMap<Vehicle, VehicleViewModel>()
@@ -43,6 +42,9 @@ namespace CondominiumApi.Applications.Mappings
                 .ForMember(dest => dest.Model, opt => opt.MapFrom(src => src.VehicleModel.Model_Name))
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.VehicleModel.Brand.Brand_Name))
                 .ForMember(dest => dest.Vehicle_Type, opt => opt.MapFrom(src => ((EVehicleType)src.Vehicle_Type).ToString()));
+
+            CreateMap<VehicleInputModel, Vehicle>()
+                .ForMember(dest => dest.Plate, opt => opt.MapFrom(src => src.Plate.ToUpper()));
 
             #endregion
 
