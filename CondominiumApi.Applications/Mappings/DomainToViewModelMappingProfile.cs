@@ -56,6 +56,14 @@ namespace CondominiumApi.Applications.Mappings
 
             #endregion
 
+            #region Brand
+
+            CreateMap<Brand, BrandViewModel>();
+
+            CreateMap<BrandInputModel, Brand>();
+
+            #endregion
+
         }
 
     }

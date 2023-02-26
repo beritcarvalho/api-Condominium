@@ -39,6 +39,7 @@ namespace CondominiumApi.Infrastructure.IoC.DependencyInjections
             services.AddScoped<IBlockRepository, BlockRepository>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
         }     
     }
 }

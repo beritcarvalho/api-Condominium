@@ -18,5 +18,9 @@ namespace CondominiumApi.Applications.Interfaces
         Task<VehicleModelViewModel> GetModel(int id);
         Task<VehicleModelViewModel> AddModel(VehicleModelInputModel newModel);
         Task<VehicleModelViewModel> UpdateModel(VehicleModelInputModel currentModeleData);
+        Task<List<BrandViewModel>> GetAllBrands();
+        Task<BrandViewModel> GetBrand(int id);
+        Task<BrandViewModel> AddBrand(BrandInputModel newModel);
+        Task<BrandViewModel> UpdateBrand(BrandInputModel currentModeleData);
     }
 }

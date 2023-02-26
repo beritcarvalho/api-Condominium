@@ -19,16 +19,19 @@ namespace CondominiumApi.Applications.Services
         private readonly IVehicleRepository _vehicleRepository;
         private readonly IApartmentRepository _apartmentRepository;
         private readonly IVehicleModelRepository _vehicleModelRepository;
+        private readonly IBrandRepository _brandRepository;
 
         public VehicleService(IMapper mapper, 
             IVehicleRepository vehicleRepository,
             IApartmentRepository apartmentRepository,
-            IVehicleModelRepository vehicleModelRepository)
+            IVehicleModelRepository vehicleModelRepository,
+            IBrandRepository brandRepository)
         {
             _mapper = mapper;
             _vehicleRepository = vehicleRepository;
             _apartmentRepository = apartmentRepository;
             _vehicleModelRepository = vehicleModelRepository;
+            _brandRepository = brandRepository;
         }
 
         public async Task<List<VehicleViewModel>> GetAllVehicles()
@@ -86,7 +89,6 @@ namespace CondominiumApi.Applications.Services
             await _vehicleRepository.UpdateAsync(vehicle);
             return _mapper.Map<VehicleViewModel>(vehicle);
         }
-
 
         public async Task<VehicleViewModel> GetVehicleAparment(decimal? id, string? plate)
         {
@@ -159,6 +161,52 @@ namespace CondominiumApi.Applications.Services
             await _vehicleModelRepository.UpdateAsync(model);
 
             return _mapper.Map<VehicleModelViewModel>(model);
+        }
+
+        public async Task<List<BrandViewModel>> GetAllBrands()
+        {
+            var brands = await _brandRepository.GetAllAsync();
+
+            if (brands is null)
+                return null;
+
+            var brandResult = new List<BrandViewModel>();
+
+            foreach (var brand in brands)
+                brandResult.Add(_mapper.Map<BrandViewModel>(brand));
+
+            return brandResult;
+        }
+
+        public async Task<BrandViewModel> GetBrand(int id)
+        {
+            var brand = await _brandRepository.GetByIdAsync(id);
+
+            if (brand is null)
+                return null;
+
+            return _mapper.Map<BrandViewModel>(brand);
+        }
+
+        public async Task<BrandViewModel> AddBrand(BrandInputModel newBrand)
+        {
+            var brand = _mapper.Map<Brand>(newBrand);
+            await _brandRepository.InsertAsync(brand);
+            return _mapper.Map<BrandViewModel>(brand);
+        }
+
+        public async Task<BrandViewModel> UpdateBrand(BrandInputModel currentBrandData)
+        {
+            var brand = await _brandRepository.GetByIdAsync(currentBrandData.Id);
+
+            if (brand is null)
+                return null;
+
+            brand = _mapper.Map(currentBrandData, brand);
+
+            await _brandRepository.UpdateAsync(brand);
+
+            return _mapper.Map<BrandViewModel>(brand);
         }
     }
 }

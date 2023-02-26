@@ -78,5 +78,38 @@ namespace CondominiumApi.Api.Controllers
             return Ok(model);
         }
 
+
+
+
+
+
+        [HttpGet("brands")]
+        public async Task<IActionResult> GetAllBrands()
+        {
+            var models = await _vehicleService.GetAllBrands();
+            return Ok(models);
+        }
+
+        [HttpGet("brands/{id:int}")]
+        public async Task<IActionResult> GetBrand([FromRoute] int id)
+        {
+            var model = await _vehicleService.GetBrand(id);
+            return Ok(model);
+        }
+
+        [HttpPost("brands")]
+        public async Task<IActionResult> AddNewBrand([FromBody] BrandInputModel newBrand)
+        {
+            var brand = await _vehicleService.AddBrand(newBrand);
+            return Ok(brand);
+        }
+
+        [HttpPut("brands")]
+        public async Task<IActionResult> UpdateBrand([FromBody] BrandInputModel currentBrandData) 
+        { 
+            var brand = await _vehicleService.UpdateBrand(currentBrandData);
+            return Ok(brand);
+        }
+
     }
 }
