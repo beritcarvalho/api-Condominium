@@ -16,7 +16,7 @@ namespace CondominiumApi.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> TestesRetornos()
+        public async Task<IActionResult> GetAllVehicles()
         {
             var list = await _vehicleService.GetAll();
             return Ok(list);
