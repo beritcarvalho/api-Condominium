@@ -18,14 +18,17 @@ namespace CondominiumApi.Applications.Services
         private readonly IMapper _mapper;
         private readonly IVehicleRepository _vehicleRepository;
         private readonly IApartmentRepository _apartmentRepository;
+        private readonly IVehicleModelRepository _vehicleModelRepository;
 
         public VehicleService(IMapper mapper, 
             IVehicleRepository vehicleRepository,
-            IApartmentRepository apartmentRepository)
+            IApartmentRepository apartmentRepository,
+            IVehicleModelRepository vehicleModelRepository)
         {
             _mapper = mapper;
             _vehicleRepository = vehicleRepository;
             _apartmentRepository = apartmentRepository;
+            _vehicleModelRepository = vehicleModelRepository;
         }
 
         public async Task<List<VehicleViewModel>> GetAllVehicles()
@@ -112,24 +115,50 @@ namespace CondominiumApi.Applications.Services
             return result;
         }
 
-        public Task<List<VehicleModelViewModel>> GetAllModels()
+        public async Task<List<VehicleModelViewModel>> GetAllModels()
         {
-            throw new NotImplementedException();
+            var models = await _vehicleModelRepository.GetAllAsync();
+
+            if (models is null)
+                return null;
+
+            var modelsResult = new List<VehicleModelViewModel>();
+
+            foreach (var model in models)
+                modelsResult.Add(_mapper.Map<VehicleModelViewModel>(model));
+
+            return modelsResult;
         }
 
-        public Task<VehicleModelViewModel> GetModel(int id)
+        public async Task<VehicleModelViewModel> GetModel(int id)
         {
-            throw new NotImplementedException();
+            var model = await _vehicleModelRepository.GetByIdAsync(id);
+
+            if (model is null)
+                return null;
+
+            return _mapper.Map<VehicleModelViewModel>(model);
         }
 
-        Task<VehicleModelViewModel> IVehicleService.AddModel(VehicleModelInputModel newModel)
+        public async Task<VehicleModelViewModel> AddModel(VehicleModelInputModel newModel)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<VehicleModel>(newModel);
+            await _vehicleModelRepository.InsertAsync(model);
+            return _mapper.Map<VehicleModelViewModel>(model);
         }
 
-        Task<VehicleModelViewModel> IVehicleService.UpdateModel(VehicleModelInputModel currentModeleData)
+        public async Task<VehicleModelViewModel> UpdateModel(VehicleModelInputModel currentModeleData)
         {
-            throw new NotImplementedException();
+            var model = await _vehicleModelRepository.GetByIdAsync(currentModeleData.Id);
+
+            if (model is null)
+                return null;
+
+            model = _mapper.Map(currentModeleData, model);
+
+            await _vehicleModelRepository.UpdateAsync(model);
+
+            return _mapper.Map<VehicleModelViewModel>(model);
         }
     }
 }

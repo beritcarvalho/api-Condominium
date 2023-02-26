@@ -18,8 +18,8 @@ namespace CondominiumApi.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllVehicles()
         {
-            var list = await _vehicleService.GetAllVehicles();
-            return Ok(list);
+            var vehicles = await _vehicleService.GetAllVehicles();
+            return Ok(vehicles);
         }
 
         [HttpGet("{id:decimal}")]
@@ -50,11 +50,33 @@ namespace CondominiumApi.Api.Controllers
             return Ok(vehicle);
         }
 
-        [HttpGet]
+        [HttpGet("models")]
         public async Task<IActionResult> GetAllModels()
         {
-            var list = await _vehicleService.GetAllVehicles();
-            return Ok(list);
+            var models = await _vehicleService.GetAllModels();
+            return Ok(models);
         }
+
+        [HttpGet("models/{id:int}")]
+        public async Task<IActionResult> GetModel([FromRoute] int id)
+        {
+            var model = await _vehicleService.GetModel(id);
+            return Ok(model);
+        }
+
+        [HttpPost("models")]
+        public async Task<IActionResult> AddNewVehicleModel([FromBody] VehicleModelInputModel newModel)
+        {
+            var model = await _vehicleService.AddModel(newModel);
+            return Ok(model);
+        }
+
+        [HttpPut("models")]
+        public async Task<IActionResult> UpdateModel([FromBody] VehicleModelInputModel currentModelData)
+        {
+            var model = await _vehicleService.UpdateModel(currentModelData);
+            return Ok(model);
+        }
+
     }
 }

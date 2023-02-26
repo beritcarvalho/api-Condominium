@@ -48,6 +48,14 @@ namespace CondominiumApi.Applications.Mappings
 
             #endregion
 
+            #region Model
+
+            CreateMap<VehicleModel, VehicleModelViewModel>();
+
+            CreateMap<VehicleModelInputModel, VehicleModel>();
+
+            #endregion
+
         }
 
     }

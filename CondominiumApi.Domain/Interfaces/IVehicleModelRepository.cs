@@ -9,5 +9,6 @@ namespace CondominiumApi.Domain.Interfaces
 {
     public interface IVehicleModelRepository : IBaseRepository<VehicleModel>
     {
+        Task<VehicleModel> GetByIdAsync(int id);
     }
 }
