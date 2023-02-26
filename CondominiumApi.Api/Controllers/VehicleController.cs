@@ -78,11 +78,6 @@ namespace CondominiumApi.Api.Controllers
             return Ok(model);
         }
 
-
-
-
-
-
         [HttpGet("brands")]
         public async Task<IActionResult> GetAllBrands()
         {
